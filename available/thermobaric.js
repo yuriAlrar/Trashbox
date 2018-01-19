@@ -61,7 +61,12 @@ function clear_grid(){
 function push_grid( object , id ){
 	document.getElementById("grid_area").innerHTML += 
 	"<div id='i" + id + "' class='clicker grid border text_wrap'><div>" + object.name + "</div>" +
-	"<div class='grid_add' style='text-align:right;'>" + RAunit( object.size ) + "/" + RAtime( object.date ) + "</div>" +
+	"<div class='grid_add' style='text-align:right;'>" + 
+		(object.ext).replace(".","") +
+		"/" + 
+		RAunit(object.size) + 
+		" - " + 
+		RAtime(object.date) + "</div>" +
 	"</div>";
 };
 function retstatus( form_data, state, callback ){
@@ -110,8 +115,10 @@ function sendPst( listObject ){
 	var form_data = new FormData();
 	var json = {
 		"filename"  : filename,
+		"extension" : listObject.ext,
 		"filesize"  : listObject.size,
 		"timestamp" : stmp,
+		"version"   : listObject.ver,
 		"flag"      : listObject.cflag,
 		"option"    : listObject.options["iv"],
 		"fragment"  : fragname
@@ -168,9 +175,10 @@ function view( h ){
 		list.push( parseInt(json["timestamp"]) );
 		es[ json["timestamp"] ] = {
 			"header" : i,
+			"ext"  : ( json["extension"] ) ? json["extension"] : "unknown",
 			"name" : ( json["filename"]  ) ? json["filename"]  : "unknown",
 			"size" : ( json["filesize"]  ) ? json["filesize"]  : -1,
-			"date" : ( json["timestamp"] ) ? json["timestamp"] : "000000000000"
+			"date" : ( json["timestamp"] ) ? json["timestamp"] : "unknown"
 		};
 	}
 	const newer = sort(list , true);
@@ -189,7 +197,6 @@ function initial_proc(){
 	customPwd();
 }
 document.addEventListener("DOMContentLoaded",function(){
-	var List = new _DATA_LIST();
 	var _body = document.getElementById("body");
 	var _fina = document.getElementById("filename");
 	var _evt_fina = document.getElementById("evt_fina")
@@ -199,7 +206,6 @@ document.addEventListener("DOMContentLoaded",function(){
 	var _sub = document.getElementById("panel_sub");
 
 	var _pws = document.getElementById("pws");
-//DOMロードが完了した時点で最初に行う処理
 	initial_proc();
 	dir_rqs();
 	_body.addEventListener( "dragover" , function(evt){
@@ -219,12 +225,12 @@ document.addEventListener("DOMContentLoaded",function(){
 		var files = evt.dataTransfer.files;
 		_fina.innerHTML = files[0].name;
 		if( _sub.style.height == "0px" ) _tgr.click();
-		fp(List , files[0]);
+		fp(files[0]);
 	} , false );
 	_spd.addEventListener( "change" , function(evt){
 		_fina.innerHTML = _spd.value;
 		if( _sub.style.height == "0px" ) _tgr.click();
-		fp( List , _spd.files[0]);
+		fp(_spd.files[0]);
 	} , false );
 	_tgr.addEventListener("click" , function(){
 		( _sub.style.height == "0px" ) ? ( tgr_option(_sub) ) : ( tgr_clear(_sub) );

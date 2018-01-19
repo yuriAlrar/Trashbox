@@ -1,29 +1,20 @@
 "use strict";
 var _DATA_LIST = function(){
-//断片化されたデータオブジェクト
 	this.list = [];
-//認証キー:
 	this.key = false;
-//ファイル名
 	this.name = null;
-//保存ファイル名(どちらか)
+	this.ext = "unknown";
 	this.namehasher = null;
 	this.namecypher = null;
-//ファイルサイズ
 	this.size = -1;
-//パスワード
 	this.pf = null;
-//暗号化オプション（IV:初期化ベクトル, CBCモード, パディングモード：PKCS7)
 	this.options = {};
-//フラグ(予約)
 	this.flag = false;
-//フラグサイズ(4MB)
 	this.fragsize = 4194304;
-	//this.fragsize = 2097152;
-//暗号前のフラグフレーズ
+//	this.fragsize = 2097152;
 	this.flag_word = "true";
-//暗号化されたフフラグフレーズ
 	this.cflag = null;
+	this.ver = "0.5.1b",
 	this.setkey();
 	this.init();
 };
@@ -52,10 +43,10 @@ var _REFER = function(){
 	this.bin = null;
 }
 _DATA_LIST.prototype.repname = function(){
-	this.cflag = String( CryptoJS.AES.encrypt( this.flag_word , this.pf , this.options ) );
-	var namecypher = String( CryptoJS.AES.encrypt( this.name , this.pf , this.options ) );
-	this.namecypher = String( namecypher );
-	this.namehasher = ( new jsSHA( this.name , "ASCII") ).getHash("SHA-256", "HEX");
+	this.cflag = String(CryptoJS.AES.encrypt(this.flag_word, this.pf, this.options) );
+	var namecypher = String( CryptoJS.AES.encrypt(this.name, this.pf, this.options) );
+	this.namecypher = namecypher;
+	this.namehasher = (new jsSHA( this.name, "ASCII") ).getHash("SHA-256", "HEX") + this.ext;
 	return;
 };
 _DATA_LIST.prototype.dumpsize = function(){
@@ -65,8 +56,8 @@ _DATA_LIST.prototype.dumpsize = function(){
 	}
 };
 _DATA_LIST.prototype.checker = function(){
-	var pflag = ( CryptoJS.AES.decrypt( this.cflag , this.pf , this.options ) ).toString(CryptoJS.enc.Utf8);
-	this.flag = ( pflag != this.flag_word ) ? this.flag = false : this.flag = true ;
+	var pflag = (CryptoJS.AES.decrypt( this.cflag , this.pf , this.options ) ).toString(CryptoJS.enc.Utf8);
+	this.flag = ( pflag != this.flag_word ) ? false : true ;
 	return this.flag;
 };
 _DATA_LIST.prototype.encrypt = function(){
@@ -151,8 +142,11 @@ _DATA_LIST.prototype.safeSend = function(point){
 	retstatus( form_data, state, _F(this, point) );
 	return;
 }
-var fp = function(listObject , file ){
-	const fs = listObject.fragsize;
+var fp = function(file){
+	let datalist = new _DATA_LIST();
+	const ext = (file.name).match(/\.[^\.]+$/);
+	datalist.ext = (ext[0]) ? ext[0] : "unk";
+	const fs = datalist.fragsize;
 	const frag = Math.ceil( file.size / fs );
 	const fpp = ( 1 / frag );
 	let _st2 = document.getElementById("state_2");
@@ -165,14 +159,14 @@ var fp = function(listObject , file ){
 			_st2.innerHTML = "ロード中:" + ald + "%";
 			let refer = new _REFER();
 			refer.raw = toBase64( new Uint8Array( reader.result ) );
-			listObject.name = file.name;
-			listObject.list[number] = refer;
+			datalist.name = file.name;
+			datalist.list[number] = refer;
 			( number + 1 <= frag ) ? ( _F( number + 1, point + fs ) ) : ( _G() );
 		};
 	};
 	const _G = function(){
 		ready();
-		state_ael( listObject );
+		state_ael( datalist );
 	};
 	loading();
 	_F( 0, 0 );
@@ -220,8 +214,8 @@ var customPwd = function(){
 	return inm;
 };
 function RAunit(i){
-	var unit = "Byte";
-	var value = parseInt(i);
+	let unit = "Byte";
+	let value = parseInt(i);
 	if(value > 1073741824){
 		value = value / 1073741824;
 		unit = "GByte";
@@ -233,6 +227,9 @@ function RAunit(i){
 	else if(value > 1024){
 		value = value / 1024;
 		unit = "KByte";
+	}
+	else{
+		unit = "-unk.unit"
 	}
 	value = value.toFixed(2);
 	return value.toString(10) + unit;

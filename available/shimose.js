@@ -9,7 +9,7 @@ function GetPara(){
 	}
 	return result;
 };
-function JointPath(param = ""){
+function jointPath(param = ""){
 	var loc = location.protocol + "//" + location.hostname + location.pathname + param;
 	return loc
 };
@@ -21,23 +21,13 @@ function jointBuffer( list ){
 	}
 	let offset = 0;
 	let stream = new Blob( lex );
-//	const cap = new ArrayBuffer(size);
-//	let stream = new Uint8Array( cap );
 	return stream;
-	/**
-	for(let i = 0; i < len; i++ ){
-		stream.set( list[i].raw, offset );
-		offset += list[i].raw.length;
-	}
-	return stream;
-	**/
 };
 function blobLoad( listObject , point ){
 	var _lost = document.getElementById("load_status");
 	let loc = listObject.list[ point ].raw;
 	let mag = 1 / listObject.list.length;
 	let basis = point / listObject.list.length;
-//	console.log("fragment" , loc );
 
 	let h = new XMLHttpRequest();
 	h.open("GET", loc , true);
@@ -63,7 +53,6 @@ function blobLoad( listObject , point ){
 			_lost.innerHTML = "100%";
 			const stream = jointBuffer( listObject.list );
 			const urlSch = window.URL.createObjectURL(stream);
-/*** 復号完了後の処理 ***/
 			let view  = document.getElementById("opt_viw");
 			let dwn   = document.getElementById("opt_dwn");
 			view.style.color = "#FFFFFF";
@@ -74,7 +63,6 @@ function blobLoad( listObject , point ){
 			dwn.download = listObject.name;
 			_lost.innerHTML = '<span style="color:#38B48B;">復号完了</span>';
 			console.log(listObject.name);
-/***/
 		}
 	}
 	h.send();
@@ -82,7 +70,6 @@ function blobLoad( listObject , point ){
 function checker( listObject ){
 	var _lost = document.getElementById("load_status");
 	var burn  = document.getElementById("dec_burn");
-//キーチェック
 	var _FS = function( ){
 		var dec_key = retPhrase( document.getElementById("dec_key").value );
 		listObject.pf = ( dec_key != null ) ? dec_key : "default_key";
@@ -118,6 +105,7 @@ function make_dl_object( sl , jp = "" ){
 	dali.key = "no need";
 	dali.setiv( sl["iv"] );
 	dali.size = sl["filesize"];
+	dali.ext = ( sl["extension"] ) ? sl["extension"] : "";
 	if( parseInt( sl["filename"] , 16 ) ){
 		dali.namehasher = sl["filename"];
 	}
@@ -129,7 +117,7 @@ function make_dl_object( sl , jp = "" ){
 };
 document.addEventListener("DOMContentLoaded",function(){
 	var para = GetPara();
-	var loc = JointPath("arc/" + para["para"]);
+	var loc = jointPath("arc/" + para["para"]);
 	var h = new XMLHttpRequest();
 	var _lost = document.getElementById("load_status");
 	h.open("GET", loc , true);
@@ -143,7 +131,7 @@ document.addEventListener("DOMContentLoaded",function(){
 	h.onload = function (e){
 		_lost.innerHTML = "パスワード入力待機";
 		var sl = h.response;
-		var lo = make_dl_object( sl , JointPath("arc/") );
+		var lo = make_dl_object( sl , jointPath("arc/") );
 		checker( lo );
 	}
 	h.send();
