@@ -38,18 +38,13 @@ function state_ael( listObject ){
 	var f = function(){
 		_sbt.removeEventListener("click" , f , false);
 		state_2();
-//パスワードの決定。直前に一度だけ
 		listObject.setpwd();
-//ファイル名を暗号化/ハッシュ化。一度だけなのでここで行う
 		listObject.repname();
-//ランパスなら
 		document.getElementById("sluch").innerHTML = listObject.pf;
-//データの暗号化
 		listObject.encrypt();
 	};
 	_sbt.addEventListener("click" , f , false );
 }
-/***option panel***/
 function tgr_clear( _tgr ){
 	_tgr.style.height = "0px";
 	_tgr.style.display = "none";
@@ -60,7 +55,6 @@ function tgr_option( _tgr ){
 	_tgr.style.height = "auto";
 	document.getElementById("panel_arr").style.transform = "rotate(-90deg)"
 }
-/***main window***/
 function clear_grid(){
 	document.getElementById("grid_area").innerHTML = "";
 }
@@ -70,7 +64,6 @@ function push_grid( object , id ){
 	"<div class='grid_add' style='text-align:right;'>" + RAunit( object.size ) + "/" + RAtime( object.date ) + "</div>" +
 	"</div>";
 };
-/***upload***/
 function retstatus( form_data, state, callback ){
 	const ccf = ( ( typeof state["progress_function"] ) == "function" )
 			? state["progress_function"]
@@ -101,7 +94,6 @@ function retstatus( form_data, state, callback ){
 	h.open("POST","./src/pst.py",true);
 	h.send(form_data);
 };
-//ヘッダの送信
 function sendPst( listObject ){
 	var filename = ( nameCypher() ) ? listObject.namecypher : listObject.namehasher;
 	var fragname = [];
@@ -167,7 +159,6 @@ function sort(list , rule){
 	});
 	return output;
 }
-/***ファイルリストを描画***/
 function view( h ){
 	var list = [];
 	var es = [];
@@ -193,8 +184,6 @@ function view( h ){
 			} , false);
 		}( es[ list[i] ] , i),false);
 	}
-//	es.appned( document.getElementById("i" + String(i) ).addEventListener("click" , function(){} , false) );
-	
 }
 function initial_proc(){
 	customPwd();
