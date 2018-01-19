@@ -1,0 +1,6 @@
+#ErrorDocument 403 /available/err.html
+#ErrorDocument 404 /available/err.html
+Options -Indexes
+<Files ~ "^\.(htaccess|htpasswd|usrlog)$">
+	deny from all
+</Files>

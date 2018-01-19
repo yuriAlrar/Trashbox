@@ -1,0 +1,374 @@
+<!doctype html>
+<html>
+	<head>
+		<title>Berylna</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<link rel="stylesheet" href="/api/avl/av_kyou.css" type="text/css"/>
+		<link rel="stylesheet" href="/api/avl/tsleep.css" type="text/css"/>
+		<link rel="stylesheet" href="/api/avl/yoshiton.css" type="text/css"/>
+		<script type="text/javascript" src="/api/avl/thermobaric.js"></script>
+		<script type="text/javascript" src="/api/avl/shapedCharge.js"></script>
+		<script type="text/javascript" src="/api/avl/slurry.js"></script>
+		<script type="text/javascript" src="/api/avl/carlit.js"></script>
+		<!--
+		<script type="text/javascript" src="/api/avl/napalm.js"></script>
+		-->
+	</head>
+<body id="body" class="flex_v">
+	<div class="grad" id="banner">
+		<div class="mar">
+			<div class="flex_box" style="width:75%;">
+				<div class="main_theme" style="margin-right:5px;">
+					<span>
+						B<span style="font-variant: small-caps;">eryl</span>N<span style="font-variant: small-caps;">a</span>
+					</span>
+				</div>
+				<div class="tit_font">
+					<span style="position:absolute;bottom:0px;">
+						powered by LCFRM.v2 mod Berylna
+					</span>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="mm_mar">
+			<div id="main_object" class="main_object">
+				<div class="flex_box">
+					<div id="det_object" class="det_object flex_v">
+						<div class="btr_chd no_slc" id="sc_set_mkdir" name="sc_set">
+							<span name="full_panel">
+								<span class="myr" style='margin-left:10px;margin-right:3px;'>&raquo;</span>
+								<span class="destr">Make Directory</span>
+							</span>
+							<span name="icon_panel" class="sv_folder" style="display:none;">
+							</span>
+						</div>
+						<div class="btr_chd no_slc" id="sc_set_rename" name="sc_set">
+							<span name="full_panel">
+								<span class="myr" style='margin-left:10px;margin-right:3px;'>&raquo;</span>
+								<span class="destr">Rename</span>
+							</span>
+							<span name="icon_panel" class="sv_edit" style="display:none;">
+							</span>
+						</div>
+						<div class="btr_chd no_slc" id="ws_set_cut" name="sc_set">
+							<span name="full_panel">
+								<span class="myr" style='margin-left:10px;margin-right:3px;'>&raquo;</span>
+								<span class="destr">Cut</span>
+							</span>
+							<span name="icon_panel" class="sv_sci" style="display:none;">
+							</span>
+						</div>
+						<div class="btr_chd no_slc" id="ws_set_paste" name="sc_set">
+							<span name="full_panel">
+								<span class="myr" style='margin-left:10px;margin-right:3px;'>&raquo;</span>
+								<span class="destr">Paste</span>
+							</span>
+							<span name="icon_panel" class="sv_clipboard" style="display:none;">
+							</span>
+						</div>
+						<div class="btr_chd no_slc" id="ws_set_clear" name="sc_set">
+							<span name="full_panel">
+								<span class="myr" style='margin-left:10px;margin-right:3px;'>&raquo;</span>
+								<span class="destr">Clear</span>
+							</span>
+							<span name="icon_panel" class="sv_cycle" style="display:none;">
+							</span>
+						</div>
+						<div class="btr_chd no_slc" id="sc_set_remove" name="sc_set" style="margin-top:25px;">
+							<span name="full_panel">
+								<span class="myr" style='margin-left:10px;margin-right:3px;'>&raquo;</span>
+								<span class="destr">Remove</span>
+							</span>
+							<span name="icon_panel" class="sv_trash" style="display:none;">
+							</span>
+						</div>
+						<div class="btr_chd no_slc" id="sc_set_logout" name="sc_set" style="margin-top:25px;">
+							<span name="full_panel">
+								<span class="myr" style='margin-left:10px;margin-right:3px;'>&raquo;</span>
+								<span class="destr">Logout</span>
+							</span>
+							<span name="icon_panel" class="sv_logout" style="display:none;">
+							</span>
+						</div>
+					</div>
+					<div class="module_cf" style="border-left:1px solid rgba(8,8,8,1);">
+						<div id="" class="module_mark" style="position:absolute;top:0px;">
+							<div id="operation_panel" class="module_mark_inline no_slc" style="">
+									Operation panel
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="bdr_object"></div>
+				<div class="flex_v" style="width:100%;height:100%;">
+					<div class="flex_box" style="height:25px;border-bottom:1px solid rgba(8,8,8,1);">
+						<div style="width:25px;height:25px;background-color:rgba(42,42,42,1);">
+							&nbsp;
+						</div>
+						<div>
+							<span id="land" class='chain_arrow hanCode' onClick='dir_rqs("dir_contents","fil_contents","")'>
+								chain root
+							</span>
+						</div>
+						<div id="chain_list">
+						</div>
+					</div>
+					<div mame="main_contents_wrap" class="flex_box" style="width:100%;height:100%;">
+						<div id="ban_object" class="ban_object flex_v">
+							<div name="directory_list" class="flex_v module_MW">
+								<div id="current_directory" class="flex_box" style="width:100%;min-height:25px;">
+									<div class="module_cf" style="height:25px;min-width:25px;border:0px;"></div>
+									<div class='stepping_dir' id='frame-1' style="width:100%;background-color:#FFFFFF;">
+										<div id="step-1" class='sv_arw_down'></div>
+										<div id="land-1" class='inner_step hanCode' style="width:80%;color:rgba(16,16,16,1);">
+											&nbsp;
+										</div>
+									</div>
+								</div>
+								<div id="cdr_list" class="flex_box module_MW">
+									<div id="" class="module_cf" style="">
+										<div id="" class="module_mark" style="position:absolute;bottom:0px;">
+											<div id="directory_list" class="module_mark_inline_r no_slc" style="">
+													Directory list
+											</div>
+										</div>
+									</div>
+									<div style="position:relative;width:15px;height:100%;box-sizing:border-box;background-color:#FFFFFF;">
+									</div>
+									<div id="dir_contents" class="dir_contents">
+										no dir
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="bdr_object"></div>
+						<div id="nav_object" class="nav_object flex_v">
+							<div id="window4" class="flex_box" style="height:70%;">
+								<div id="" class="module_cf flex_v" style="">
+									<div style="width:100%;min-height:25px;box-sizing:border-box;background-color:rgba(42,42,42,1);"></div>
+									<div class="cdr_box" style="width:100%;min-height:25px;background-color:rgba(42,42,42,1);"></div>
+									<div id="" class="module_mark" style="position:absolute;bottom:0px;">
+										<span class="module_mark_inline_r no_slc">
+											File list
+										</span>
+									</div>
+								</div>
+								<div class="flex_v" style="width:100%;height:100%;">
+									<div class="sl_nav" style="min-height:25px;">
+										<span id="bychk" class="ballistic_clm sort myr no_slc">
+											&raquo;
+										</span>
+										<span id="byname" class="ballistic_text sort dosis no_slc">
+											fileName
+										</span>
+										<span id="bysize" class="ballistic_ext sort dosis no_slc">
+											Size
+										</span>
+										<span id="bydate" class="ballistic_stmp sort dosis no_slc">
+											Date
+										</span>
+									</div>
+										<form id="fil_contents" name="nm_form3" class="fil_contents">
+											no file
+										</form>
+									</div>
+								</div>
+								<div id="window3" class="UploadWindow flex_box" style="height:300px;">
+									<div id="" class="module_cf" style="">
+										<div id="" class="module_mark" style="position:absolute;bottom:0px;">
+											<div class="module_mark_inline_r no_slc">
+												File Upload
+											</div>
+										</div>
+									</div>
+									<div class="in_window flex_v" style="box-sizing:border-box;">
+										<div class="flex_box" style="position:relative;min-height:25px;">
+											<div id="nav_submit" class="nav_submit ballistic_baseColor no_slc">
+												Upload
+											</div>
+											<div id="nav_clear" class="nav_submit ballistic_baseColor no_slc" style="border-left:0px;">
+												Clear
+											</div>
+											<div class="nav_telop">File upload - Upload capacity is a MAXIMUM of ???MB</div>
+										</div>
+										<form id='file_area' class='file_area'>
+											<div id="file_list" class="file_list">
+												<div style="padding-left:30px;">
+													&raquo; Select file	
+													<br>
+													&raquo; Crick or Drag and Drop Here
+												<br>
+											</div>
+										</div>
+										<input type="file" id="supload" name="file" onChange="FileSelector()" multiple/>
+									</form>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div id="opt_object" style="min-width:25px;background-color:rgba(42,42,42,1);border-top:1px solid rgba(8,8,8,1);">
+					<div id="module_opt" class="module_opt">
+						<div id="module_opt_inner" class="module_main_inner" style="display:none;">
+							<div style="width:100%;height:100%;background-color:rgba(42,42,42,0);">
+								<div class="flex_box no_slc hanCode" style="position:relative;padding-top:15px;font-size:1.2em;">
+									<div style="margin-left:10px;">
+										Options
+									</div>
+									<div id="opt_prev" style="padding-left:25px;padding-right:10px;cursor:pointer;color:rgba(255,255,255,0.5);">
+										&laquo;
+									</div>
+									<div class="dosis_l" style="font-size:1em;">
+										page
+										<span id="pgc_n" style="display:inline-block;width:20px;text-align:right;">
+											-
+										</span>
+										/
+										<span id="pgc_m" style="display:inline-block;width:20px;">
+											-
+										</span>
+									</div>
+									<div id="opt_next" style="padding-left:10px;padding-right:25px;cursor:pointer;color:rgba(255,255,255,1);">
+										&raquo;
+									</div>
+									<span id="opt_apply" style="position:absolute;right:50px;cursor:pointer;">
+										Apply
+									</span>
+								</div>
+								<div id="opt_cns" style="color:#FE0000;font-size:1em;margin-left:25px;">
+									&nbsp;
+								</div>
+
+								<div id="pg1" class="flex_box dosis hanCode" style="padding:10px;">
+									<div style="margin-left:15px;margin-right:20px;">
+										<div class="dosis" style="font-size:1em;">
+											ニックネームの変更
+											<div id="err_nnc" style="color:#FE0000;margin-top:2px;margin-left:3px;font-size:0.8em;">
+												&nbsp;
+											</div>
+										</div>
+										<div style="padding-left:15px;">
+											<span style="display:inline-block;width:60px;">
+												現在:
+											</span>
+											<span id="nickname">
+												&nbsp;
+											</span>
+										</div>
+										<div style="padding-left:15px;margin-top:5px;">
+											<span style="display:inline-block;width:60px;">
+												New:
+											</span>
+											<input type="textbox" id="2nc" class="input_opt" style="margin:0px;">
+										 </div>
+										 <div class="dosis" style="margin-top:25px;">UID/サブドメインの変更
+										 	<div id="err_nui" style="color:#FE0000;margin-top:2px;margin-left:3px;font-size:0.8em;">
+												&nbsp;
+											</div>
+										 </div>
+										 <div style="padding-left:15px;">
+										 	<span style="display:inline-block;width:60px;">現在:</span><span id="unique_id">
+												&nbsp;
+											</span>
+										 </div>
+										 <div style="padding-left:15px;margin-top:5px;">
+										 	<span style="display:inline-block;width:60px;">
+												New:
+											</span>
+										 	<input type="textbox" id="nui" class="input_opt" style="margin:0px;">
+										 </div>
+									</div>
+									<div style="padding-left:15px;margin-right:20px;">
+										<div class="dosis">
+											パスワードの変更
+											<div id="err_pwd" style="color:#FE0000;margin-top:2px;margin-left:3px;font-size:0.8em;">
+												&nbsp;
+											</div>
+										</div>
+										<div style="padding-left:15px;">
+											現在のパスワード:
+										</div>
+										<input type="password" id="Cpasswd" class="input_opt" autocomplete="off">
+										<div style="padding-left:15px;">
+											新しいパスワード:
+										</div>
+										<input type="password" id="Npasswd" class="input_opt"/>
+										<div style="padding-left:15px;">
+											新しいパスワード(再入力):
+										</div>
+										<input type="password" id="Rpasswd" class="input_opt"/>
+									</div>
+								</div>
+<!-- for Webdav -->
+								<div id="pg2" class="flex_box dosis hanCode" style="padding:10px;display:none;">
+									<div style="margin-left:15px;margin-right:20px;">
+										<div class="dosis">
+											webdavログインユーザーの作成/変更
+											<div id="err_w_usr" style="color:#FE0000;margin-top:2px;margin-left:3px;font-size:0.9em;">
+												&nbsp;
+											</div>
+											<div id="err_w_pwd" style="color:#FE0000;margin-top:2px;margin-left:3px;font-size:0.9em;">
+												&nbsp;
+											</div>
+										</div>
+										<div style="padding-left:15px;">
+											Webdavで使用するログイン名:
+										</div>
+										<input type="text" id="w_id" class="input_opt">
+										<div style="padding-left:15px;font-style:italic;">
+											&raquo; 現在このアカウントにてログインするパスワード:
+										</div>
+										<input type="password" id="w_Cpasswd" class="input_opt">
+										<div style="padding-left:15px;">
+											Webdavで使用するパスワード:
+										</div>
+										<input type="password" id="w_Npasswd" class="input_opt">
+										<div style="padding-left:15px;">
+											Webdavで使用するパスワード(再入力):
+										</div>
+										<input type="password" id="w_Rpasswd" class="input_opt">
+									</div>
+								</div>
+							</div>
+						</div>
+						<div id="options" class="module_mark" style="bottom:150px;">
+							<span class="module_mark_inline_r no_slc">
+								Options
+							</span>
+						</div>
+					</div>
+					<div id="module_dos" class="module_opt" style="height:150px;">
+						<div id="module_dos_inner" class="module_main_inner" style="display:none;">
+							<div class="no_slc" style="font-family:'dosis_m';padding:5px;margin-bottom:15px;font-size:1.2em;">
+								Directory Option
+							</div>
+							<div class="no_slc" style="font-family:'dosis_m';padding-left:15px;">
+								<span>
+									アクセス制御
+								</span>
+								<span id="chauth" style="margin-left:45px;cursor:pointer;">
+									&nbsp;
+								</span>
+							</div>
+							<div style="box-sizing:border-box;padding-left:15px;">
+								<span class="no_slc" style="font-family:'dosis_m';">
+									アクセスURL
+								</span>
+								<div class="delta" id="iSurl">
+									&nbsp;
+								</div>
+							</div>
+						</div>
+						<div id="directories" class="module_mark" style="bottom:0px;">
+							<span class="module_mark_inline_r no_slc">
+								Directory
+							</span>
+						</div>
+					</div>
+				</div>
+			</div>
+	</div>
+</body>
+</html>
+
