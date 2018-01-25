@@ -69,7 +69,7 @@ class handler:
 		with open( "/var/www/trashbox/dls/key.list" , "r" ) as f:
 			cipher = AES.new( f.readline().strip().encode() )
 #発行キーの生存時間
-			key    = cipher.encrypt( self.dt216( 8 ) )
+			key    = cipher.encrypt( self.dt216( 120 ) )
 			h16    = binascii.hexlify( key )
 		return h16.decode()
 	def acsAuth( self , key = None ):

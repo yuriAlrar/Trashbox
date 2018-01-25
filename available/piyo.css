@@ -16,7 +16,8 @@
 		align-content:flex-start;
 		font-family:'dosis_m','srchan';
 		min-width:100%;
-		overflow:scroll;
+		padding-bottom:10px;
+		overflow:auto;
 	}
 	div.panel{
 		position:relative;
@@ -25,7 +26,12 @@
 		height:auto;
 		padding-top:5px;
 		padding-bottom:5px;
+		color:rgba(69,69,69,1);
 		background-color:rgba(255,255,255,1);
+	}
+	div.panel > .inner_panel{
+		padding-top:5px;
+		padding-bottom:5px;
 	}
 	div.hud{
 		position:absolute;
@@ -69,6 +75,13 @@
 		text-align:center;
 		padding-left:10px;
 		padding-right:10px;
+		cursor:default;
+	}
+	.marker{
+		user-select:none;
+		-ms-user-select:none;
+		-webkit-user-select:none;
+		-moz-user-select:none; 
 	}
 	.state{
 		position:relative;
@@ -85,6 +98,7 @@
 	.border{
 		border:1px dashed rgba(192,192,192,1);
 		border-radius:5px;
+		white-space:nowrap;
 	}
 	.grid{
 		position:relative;
@@ -100,10 +114,11 @@
 	}
 	.koyoso{
 		position:relative;
-		display:block;
 		box-sizing:border-box;
-		width:30%;
-		padding-right:25px;
+		margin-left:10px;
+		margin-right:10px;
+		padding-left:10px;
+		padding-right:10px;
 	}
 	.text_wrap{
 		overflow: hidden;

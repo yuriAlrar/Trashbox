@@ -19,7 +19,8 @@ var _DATA_LIST = function(){
 	this.init();
 };
 _DATA_LIST.prototype.init = function(){
-	this.pf = random(64);
+	const rdm = Math.floor( Math.random() * 33 ) + 32;
+	this.pf = random(rdm);
 	this.options = { iv: CryptoJS.lib.WordArray.random(128 / 8) , mode: CryptoJS.mode.CBC , padding: CryptoJS.pad.Pkcs7};
 };
 _DATA_LIST.prototype.setiv = function( v ){
@@ -147,9 +148,10 @@ var fp = function(file){
 	const ext = (file.name).match(/\.[^\.]+$/);
 	datalist.ext = (ext[0]) ? ext[0] : "unk";
 	const fs = datalist.fragsize;
-	const frag = Math.ceil( file.size / fs );
+	const frag = (file.size < fs) ? 1 : Math.ceil( file.size / fs );
 	const fpp = ( 1 / frag );
 	let _st2 = document.getElementById("state_2");
+	datalist.name = file.name;
 	const _F = function( number, point ){
 		var reader = new FileReader();
 		var chunk = file.slice( point , point + fs );
@@ -159,9 +161,8 @@ var fp = function(file){
 			_st2.innerHTML = "ロード中:" + ald + "%";
 			let refer = new _REFER();
 			refer.raw = toBase64( new Uint8Array( reader.result ) );
-			datalist.name = file.name;
 			datalist.list[number] = refer;
-			( number + 1 <= frag ) ? ( _F( number + 1, point + fs ) ) : ( _G() );
+			( number + 1 < frag ) ? ( _F( number + 1, point + fs ) ) : ( _G() );
 		};
 	};
 	const _G = function(){
@@ -242,6 +243,15 @@ function RAtime(i){
 function breakKey(){
 	const dt = ( new Date('1999-12-31T23:59:59Z') ).toUTCString();
 	document.cookie = "rst=; expires=" + dt;
+	var h = new XMLHttpRequest();
+	h.onreadystatechange = function(){
+		if(h.readyState != 4 || h.status != 200){
+			return;
+		}
+	};
+	h.withCredentials = true;
+	h.open("GET","http://localhost/ap2/",true);
+	h.send();
 };
 var bin2hex = function( u8a ){
 	let mode_hex = "";

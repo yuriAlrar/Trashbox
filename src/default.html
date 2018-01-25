@@ -9,6 +9,10 @@
 		<script type="text/javascript" src="/ap2/avl/thermobaric.js"></script>
 		<script type="text/javascript" src="/ap2/avl/crypto-js/rollups/aes.js"></script>
 		<script type="text/javascript" src="/ap2/avl/sha/sha256.js"></script>
+
+		<script src="/ap2/avl/react_16/react.development.js"></script>
+		<script src="/ap2/avl/react_16/react-dom.development.js"></script>
+		<script src="/ap2/avl/react_16/babel.min.js"></script>
 	</head>
 <body id="body" class="flex_v">
 	<div class="top">
@@ -23,76 +27,109 @@
 				</div>
 			</div>
 		</div>
-		<div class="panel" style="color:rgba(69,69,69,1);">
-			<div class="flex_box">
-				<div style="white-space:nowrap;">
-					<form class="file_area border">
-						<input id="legacy_fp" type="file" />
-						クリック/ドラッグ&amp;ドロップでファイルを選択
-					</form>
+		<div class="panel flex_box" style="flex-wrap:wrap;">
+			<div class="flex_box inner_panel">
+				<div class="navi marker"> &raquo; </div>
+				<form class="file_area border">
+					<input id="legacy_fp" type="file" />
+					クリック/ドラッグ&amp;ドロップでファイルを選択
+				</form>
+			</div>
+			<div class="flex_box inner_panel">
+				<div class="navi marker"> &raquo; </div>
+				<div class="contex text_wrap" id="filename">
+					&nbsp;
 				</div>
-				<div class="flex_box">
-					<div class="navi"> &raquo; </div>
-					<div class="contex text_wrap" id="filename">
-						&nbsp;
-					</div>
-					<div id="navi_2"  class="navi forbidden"> &raquo; </div>
-					<div id="state_2" class="state forbidden">
-						待機
-					</div>
-					<div id="navi_3_1" class="navi forbidden"> &raquo; </div>
-					<div id="submit_3" class="clicker border navi forbidden">
-						アップロード
-					</div>
-					<div id="navi_3_2" class="navi forbidden"> &raquo; </div>
-					<div id="state_3" class="state forbidden">
-						待機
-					</div>
-					<div id="navi_3_3" class="navi">:</div>
-					<div id="progress_3" class="forbidden">
-						0
-					</div>
-					<div id="unit_3" class="forbidden">
-						%
-					</div>
+				<div id="navi_2"  class="navi marker forbidden"> &raquo; </div>
+				<div id="state_2" class="state mNotice">
+					待機
+				</div>
+			</div>
+			<div class="flex_box inner_panel">
+				<div id="navi_3_1" class="navi marker forbidden"> &raquo; </div>
+				<div id="submit_3" class="clicker border navi marker forbidden">
+					アップロード
+				</div>
+				<div id="navi_3_2" class="navi marker forbidden"> &raquo; </div>
+				<div id="state_3" class="state forbidden">
+					待機
+				</div>
+				<div id="navi_3_3" class="navi marker">:</div>
+				<div id="progress_3" class="forbidden">
+					0
+				</div>
+				<div id="unit_3" class="forbidden" style="margin-right:25px;">
+					%
 				</div>
 			</div>
 		</div>
 		<div id="panel_sub" class="panel" style="height:0px;display:none;">
-			<div class="flex_box" style="align-items:flex-start;">
-				<div style="width:10px;">
-				</div>
-				<input id="fey" type="checkbox" checked="checked" disabled="disabled" style="display:block;" />
-				<div class="koyoso" style="width:auto;">
-					ファイルを暗号化する
-				</div>
-				<input id="ncy" type="checkbox" />
-				<div class="koyoso">
-					ファイル名も暗号化する
-					<div style="font-size:0.7em;color:rgba(128,128,128,1);">
-						※ 暗号化しない場合、ファイル名はハッシュ化されます
-					</div>
-					<div id="crypted_name" class="text_wrap">
+			<div class="flex_box" style="align-items:flex-start;flex-wrap:wrap;">
+				<div class="flex_box koyoso text_wrap">
+					<input id="fey" type="checkbox" checked="checked" disabled="disabled" />
+					<div>
+						ファイルを暗号化する
+						<br>
+						<span class="text_wrap" style="color:#696969;">暗号モード：AES256</span>		
 					</div>
 				</div>
-				<input id="pws" type="checkbox" />
-				<div class="koyoso">
-					任意のパスワードを使用する
-					<div style="font-size:0.7em;color:rgba(128,128,128,1);">
-						※ 使用シない場合、ランダムなパスワードが与えられます
+				<div class="flex_box koyoso text_wrap">
+					<input id="ncy" type="checkbox"/>
+					<div>
+						ファイル名も暗号化する
+						<br>
+						<span style="font-size:0.7em;color:#696969;">
+							※ 暗号化しない場合、ファイル名はハッシュ化されます
+						</span>		
 					</div>
-					<div class="flex_box">
-						<input id="apw" type="password"/>
-					</div>
-					<div class="flex_box">
-						<div style="padding-left:10px;padding-right:10px;">
-							&raquo;
+				</div>
+				<div class="flex_box koyoso text_wrap" style="flex-grow:1;">
+					<input id="pws" type="checkbox" />
+					<div>
+						任意のパスワードを使用する
+						<div style="font-size:0.7em;color:#696969;">
+							※ 使用シない場合、ランダムなパスワードが与えられます
 						</div>
-						<div id="sluch">
+						<div class="flex_box">
+							<div class="navi">
+									&raquo;
+							</div>		
+							<input id="apw" type="password" style="width:100%;" />
 						</div>
+						<div class="flex_box">
+							<div class="navi">
+								&raquo;
+							</div>
+							<div id="sluch" class="text_wrap">
+								<span class="mExplain" style="font-style:italic;font-size:0.8em;">
+									暗号処理後、ここにはパスワードが表示されます
+								</span>
+							</div>
+						</div>		
 					</div>
 				</div>
 			</div>
+			<div style="width:100%;height:1px;background-color:#f8fbf8;"></div>
+			<div>
+				ファイルに対してタグとか説明をつける
+			</div>
+			<div class="flex_box koyoso" style="align-items:flex-start;flex-wrap:wrap;">
+				<div class="flex_box koyoso">
+					<div class="navi marker"> &raquo; </div>
+					<input id="add_tag" type="text">
+					<div id="submit_tag" class="clicker border navi marker" style="margin-left:5px;">
+						追加
+					</div>	
+				</div>
+				<div class="flex_box koyoso" style="flex-grow:1;">
+					<div class="navi marker"> &raquo; </div>
+					<div id="tagged" style="flex-grow:1;border:1px solid #f3f3f3;">
+						<span class="mExplain" style="font-style:italic;font-size:0.9em;">
+							ここには設定済みのタグ、説明文が一覧で表示されます
+						</span>
+					</div>
+				</div>
+			</div>		
 		</div>
 		<div id="panel_tgr" class="clicker , panel" style="text-align:center;">
 			<div id="panel_arr" class="rot">
@@ -101,6 +138,8 @@
 		</div>
 	</div>
 	<div id="grid_area" class="contents" style="flex-grow:1;">
+	</div>
+	<div style="width:100vw;height:10px;">
 	</div>
 	<div id="hud" class="hud">
 	</div>

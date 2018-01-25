@@ -64,7 +64,7 @@
 	body{
 		position:relative;
 		display:block;
-		width:100%;
+		width:100vw;
 		height:100%;
 		margin:0px;
 		padding:0px;
@@ -81,21 +81,6 @@
 		position:relative;
 		margin-top:30px;
 	}
-/**
-	div.grad{
-		position:relative;
-		width:100%;
-		height:auto;
-		margin-top:0px;
-		vertical-align:bottom;
-		text-align:left;
-		background: -webkit-linear-gradient(top,#FFFFFF 0%,#FFFFFF 0%,#F0F0F0 96%,#696969 100%);
-		background:    -moz-linear-gradient(top,#FFFFFF 0%,#FFFFFF 0%,#F0F0F0 96%,#696969 100%);
-		background:     -ms-linear-gradient(top,#FFFFFF 0%,#FFFFFF 0%,#F0F0F0 96%,#696969 100%);
-		background:      -o-linear-gradient(top,#FFFFFF 0%,#FFFFFF 0%,#F0F0F0 96%,#696969 100%);
-		background:         linear-gradient(top,#FFFFFF 0%,#FFFFFF 0%,#F0F0F0 96%,#696969 100%);
-	}
-**/
 	div.grad{
 		position:relative;
 		width:100%;
@@ -304,16 +289,48 @@
 		color:#6495ED;
 	}
 	input{
+		display:block;
 		background-color:rgba(0,0,0,0);
-		border:solid 0px #AFAFAF;
-		border-bottom:solid 1px #AFAFAF;
+		border:solid 1px #AFAFAF;
 		font-family:'dosis_m','srchan';
 	}
 	input:focus{
+		display:block;
 		background-color:rgba(0,0,0,0);
-		border:solid 0px #AFAFAF;
-		border-bottom:solid 1px #00A4AC;
+		border:solid 1px #00A4AC;
 		font-family:'dosis_m','srchan';
+	}
+	.mText{
+		color:#696969;
+	}
+	.mActive{
+		color:#00A4AC;
+	}
+	.mNotice{
+		color:#38B48B;
+	}
+	.mExplain{
+		color:#f8b500;
+	}
+	.mCaution{
+		color:#EB6101;
+	}
+	input[type="checkbox"]{
+		position:relative;
+		margin:5px;
+	}
+	input[type="text"]{
+		position:relative;
+	}
+	input[type="text"][disabled]{
+		position:relative;
+	}
+	input[type="password"]{
+		position:relative;
+	}
+	input[type="password"][disabled]{
+		position:relative;
+		border:solid 1px rgba(69,69,69,0.1);
 	}
 	.input_opt{
 		width:150px;

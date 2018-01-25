@@ -62,7 +62,6 @@ function blobLoad( listObject , point ){
 			dwn.href = urlSch;
 			dwn.download = listObject.name;
 			_lost.innerHTML = '<span style="color:#38B48B;">復号完了</span>';
-			console.log(listObject.name);
 		}
 	}
 	h.send();
@@ -129,7 +128,7 @@ document.addEventListener("DOMContentLoaded",function(){
 		_lost.innerHTML = "ヘッダーロード中&raquo;" + ( ( e.loaded / e.total ) * 100 ).toString() + "%";
 	}
 	h.onload = function (e){
-		_lost.innerHTML = "パスワード入力待機";
+		_lost.innerHTML = "キー入力待機";
 		var sl = h.response;
 		var lo = make_dl_object( sl , jointPath("arc/") );
 		checker( lo );
