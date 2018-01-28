@@ -2,14 +2,39 @@ class AddTagPanel extends React.Component{
     constructor(props){
         super(props);
         this.state = {
-			newTag:""
+			newTag:"",
+			tagStatus:false,
+			defaultContent:"ここには設定済みのタグ/説明文が一覧で表示されます",
+			tagContent:[]
 		};
+		this.setTag = this.setTag.bind(this);		
 		this.declareTag = this.declareTag.bind(this);
+		this.addTagContent = this.addTagContent.bind(this);
 	}
-	declareTag(e){
+	setTag(e){
 		this.setState({
 			newTag : e.target.value,
 		});
+	}
+	declareTag(){
+		console.log(this.state.newTag);
+		let list = (this.state.tagContent);
+		list.push(this.state.newTag);
+		this.setState({
+			tagStatus:true,
+			tagContent:list,
+			newTag:""
+		});
+		this.addTagContent();
+	}
+	componentDidMount(){
+		this.addTagContent();
+	}
+	addTagContent(){
+		ReactDOM.render(
+			<span>{ ( (this.state.tagContent).length ) ? (this.state.tagContent).join(",") : this.state.defaultContent }</span>,
+			document.getElementById("tag_content")
+		);
 	}
 	render(){
 		return(
@@ -19,15 +44,12 @@ class AddTagPanel extends React.Component{
 			</div>
 			<div className="flex_box koyoso" >
 				<div className="navi marker"> &raquo; </div>
-				<input type="text" value={this.state.newTag} onChange={this.declareTag} />
-				<div className="clicker border navi marker" onClick={() => console.log(this.state.newTag)  } >
+				<input type="text" value={this.state.newTag} onChange={this.setTag} />
+				<div className="clicker border navi marker" onClick={this.declareTag } >
 					追加
 				</div>
 				<div className="navi marker"> &raquo; </div>
-				<div style={{flex:1,borderStyle:"solid",borderWidth:1,borderColor:"#f3f3f3"}}>
-					<span className="mExplain">
-						ここには設定済みのタグ/説明文が一覧で表示されます
-					</span>
+				<div id="tag_content" style={{flex:1,borderStyle:"solid",borderWidth:1,borderColor:"#f3f3f3"}}>
 				</div>
 			</div>
 		</div>
@@ -144,7 +166,7 @@ class MainContentPanel extends React.Component{
 			viewState:"none"
 		};
 		this.changes = this.changes.bind(this);
-	}
+	}	
 	changes(){
 		this.setState({
 			viewState : ( this.state.viewState == "none" ) ? "block" : "none",
@@ -166,7 +188,7 @@ class MainContentPanel extends React.Component{
 				</div>
 			</div>
 		);
-	}	
+	}
 }
 class AddPanel extends React.Component {
     constructor(props){
