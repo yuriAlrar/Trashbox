@@ -17,22 +17,25 @@ class AddTagPanel extends React.Component{
 		});
 	}
 	declareTag(){
-		console.log(this.state.newTag);
 		let list = (this.state.tagContent);
-		list.push(this.state.newTag);
+		if(this.state.newTag !== ""){
+			list.push(this.state.newTag);
+		}
 		this.setState({
 			tagStatus:true,
 			tagContent:list,
 			newTag:""
 		});
 		this.addTagContent();
-	}
+	}	
 	componentDidMount(){
 		this.addTagContent();
 	}
 	addTagContent(){
 		ReactDOM.render(
-			<span>{ ( (this.state.tagContent).length ) ? (this.state.tagContent).join(",") : this.state.defaultContent }</span>,
+			<span>
+				{ ( (this.state.tagContent).length ) ? (this.state.tagContent).join(",") : this.state.defaultContent }
+			</span>,
 			document.getElementById("tag_content")
 		);
 	}
@@ -116,16 +119,34 @@ class UploadFlowPanel extends React.Component{
     constructor(props){
         super(props);
         this.state = {
-        };
-    }
+			fileName:"",
+		};
+		this.fileLoader = this.fileLoader.bind(this);
+		this.viewFilename = this.viewFilename.bind(this);
+	}
+	fileLoader(e){
+		const fn = e.target.files[0].name;
+		this.setState({
+			fileName:fn
+		});
+		this.viewFilename(fn);
+	}
+	viewFilename(fn){
+		ReactDOM.render(
+			<span>
+				{ fn }
+			</span>,
+			document.getElementById("filename")
+		);
+	}
 	render(){
 		return(
 			<div className="panel flex_box">
 				<div className="flex_box inner_panel">
 					<div className="navi marker"> &raquo; </div>
 					<form className="file_area border">
-						<input id="legacy_fp" type="file" />
-						クリック/ドラッグ&amp;ドロップでファイルを選択
+						<input id="legacy_fp" type="file" onChange={this.fileLoader} />
+						クリック&frasl;ドラッグ&amp;ドロップでファイルを選択
 					</form>
 				</div>
 				<div className="flex_box inner_panel">
@@ -166,22 +187,22 @@ class MainContentPanel extends React.Component{
 			viewState:"none"
 		};
 		this.changes = this.changes.bind(this);
-	}	
+	}
 	changes(){
 		this.setState({
 			viewState : ( this.state.viewState == "none" ) ? "block" : "none",
 		});
 	}
 	render(){
-		let cn = (["marker",( this.state.viewState == "none" ) ? "rot" : "revRot"].join(" "));
+		const cn = (["marker",( this.state.viewState == "none" ) ? "rot" : "revRot"].join(" "));
 		return(
 			<div>
-				<UploadFlowPanel />
+				<UploadFlowPanel dataList={this.props.dataList} />
 				<div id="panel_sub" className="panel" style={{display:this.state.viewState}}>
 					<UploadOptionPanel />
 					<AddTagPanel />
 				</div>
-				<div id="panel_tgr" className="clicker panel" onClick={ this.changes }>
+				<div id="panel_tgr" className="clicker panel" onClick={this.changes}>
 					<div id="panel_arr" className={cn}>
 						&raquo;
 					</div>
