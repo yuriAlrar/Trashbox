@@ -11,7 +11,6 @@ import datetime
 import locale
 import hashlib
 import urllib
-from urllib.parse import urlparse
 import datetime
 import codecs
 import http
@@ -23,7 +22,7 @@ from wsgiref.util import request_uri
 from Crypto.Cipher import AES
 import binascii
 
-sys.path.append('/var/www/trashbox/source/src')
+sys.path.append('/var/www/trashbox/Trashbox/src')
 import extlib
 class handler:
 	def __init__(self , env):
@@ -99,8 +98,8 @@ class handler:
 def application(environ, start_response):
 	Handler = handler(environ)
 	p = "/var/www/trashbox"
-	d = p + "/source/src/default.html"
-	v = p + "/source/src/view.html"
+	d = p + "/Trashbox/src/default.html"
+	v = p + "/Trashbox/src/view.html"
 #get request
 	method = environ.get('REQUEST_METHOD')
 	if method == "GET":

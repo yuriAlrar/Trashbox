@@ -3,139 +3,34 @@
 	<head>
 		<title>TrashBox</title>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-		<link rel="stylesheet" href="/ap2/avl/av_kyou.css" type="text/css"/>
-		<link rel="stylesheet" href="/ap2/avl/piyo.css" type="text/css"/>
-		<script type="text/javascript" src="/ap2/avl/cordite.js"></script>
-		<script type="text/javascript" src="/ap2/avl/thermobaric.js"></script>
-		<script type="text/javascript" src="/ap2/avl/crypto-js/rollups/aes.js"></script>
-		<script type="text/javascript" src="/ap2/avl/sha/sha256.js"></script>
+		<link rel="stylesheet" href="/avl/av_kyou.css" type="text/css"/>
+		<link rel="stylesheet" href="/avl/piyo.css" type="text/css"/>
+		<script type="text/javascript" src="/avl/cordite.js"></script>
+		<script type="text/javascript" src="/avl/thermobaric.js"></script>
 
-		<script src="/ap2/avl/react_16/react.development.js"></script>
-		<script src="/ap2/avl/react_16/react-dom.development.js"></script>
-		<script src="/ap2/avl/react_16/babel.min.js"></script>
+		<script type="text/javascript" src="/avl/crypto-js/rollups/aes.js"></script>
+		<script type="text/javascript" src="/avl/sha/sha256.js"></script>
+
+		<script src="/avl/react_16/react.development.js"></script>
+		<script src="/avl/react_16/react-dom.development.js"></script>
+		<script src="/avl/react_16/babel.min.js"></script>
+
+		<script type="text/babel" src="/avl/rPanel.jsx"></script>
 	</head>
 <body id="body" class="flex_v">
-	<div class="top">
-		<div class="grad" id="banner">
-			<div class="mar">
-				<div class="flex_box" style="width:75%;">
-					<div class="main_theme" style="margin-right:5px;">
-						<span>
-							T<span style="font-variant: small-caps;">rash</span>B<span style="font-variant: small-caps;">ox</span>
-						</span>
-					</div>
+		<div class="grad mar">
+			<div class="flex_box">
+				<div class="main_theme" style="margin-right:5px;">
+					T<span style="font-variant: small-caps;">rash</span>B<span style="font-variant: small-caps;">ox</span>
 				</div>
-			</div>
-		</div>
-		<div class="panel flex_box" style="flex-wrap:wrap;">
-			<div class="flex_box inner_panel">
-				<div class="navi marker"> &raquo; </div>
-				<form class="file_area border">
-					<input id="legacy_fp" type="file" />
-					クリック/ドラッグ&amp;ドロップでファイルを選択
-				</form>
-			</div>
-			<div class="flex_box inner_panel">
-				<div class="navi marker"> &raquo; </div>
-				<div class="contex text_wrap" id="filename">
+				<div>
 					&nbsp;
 				</div>
-				<div id="navi_2"  class="navi marker forbidden"> &raquo; </div>
-				<div id="state_2" class="state mNotice">
-					待機
-				</div>
-			</div>
-			<div class="flex_box inner_panel">
-				<div id="navi_3_1" class="navi marker forbidden"> &raquo; </div>
-				<div id="submit_3" class="clicker border navi marker forbidden">
-					アップロード
-				</div>
-				<div id="navi_3_2" class="navi marker forbidden"> &raquo; </div>
-				<div id="state_3" class="state forbidden">
-					待機
-				</div>
-				<div id="navi_3_3" class="navi marker">:</div>
-				<div id="progress_3" class="forbidden">
-					0
-				</div>
-				<div id="unit_3" class="forbidden" style="margin-right:25px;">
-					%
-				</div>
 			</div>
 		</div>
-		<div id="panel_sub" class="panel" style="height:0px;display:none;">
-			<div class="flex_box" style="align-items:flex-start;flex-wrap:wrap;">
-				<div class="flex_box koyoso text_wrap">
-					<input id="fey" type="checkbox" checked="checked" disabled="disabled" />
-					<div>
-						ファイルを暗号化する
-						<br>
-						<span class="text_wrap" style="color:#696969;">暗号モード：AES256</span>		
-					</div>
-				</div>
-				<div class="flex_box koyoso text_wrap">
-					<input id="ncy" type="checkbox"/>
-					<div>
-						ファイル名も暗号化する
-						<br>
-						<span style="font-size:0.7em;color:#696969;">
-							※ 暗号化しない場合、ファイル名はハッシュ化されます
-						</span>		
-					</div>
-				</div>
-				<div class="flex_box koyoso text_wrap" style="flex-grow:1;">
-					<input id="pws" type="checkbox" />
-					<div>
-						任意のパスワードを使用する
-						<div style="font-size:0.7em;color:#696969;">
-							※ 使用シない場合、ランダムなパスワードが与えられます
-						</div>
-						<div class="flex_box">
-							<div class="navi">
-									&raquo;
-							</div>		
-							<input id="apw" type="password" style="width:100%;" />
-						</div>
-						<div class="flex_box">
-							<div class="navi">
-								&raquo;
-							</div>
-							<div id="sluch" class="text_wrap">
-								<span class="mExplain" style="font-style:italic;font-size:0.8em;">
-									暗号処理後、ここにはパスワードが表示されます
-								</span>
-							</div>
-						</div>		
-					</div>
-				</div>
-			</div>
-			<div style="width:100%;height:1px;background-color:#f8fbf8;"></div>
-			<div>
-				ファイルに対してタグとか説明をつける
-			</div>
-			<div class="flex_box koyoso" style="align-items:flex-start;flex-wrap:wrap;">
-				<div class="flex_box koyoso">
-					<div class="navi marker"> &raquo; </div>
-					<input id="add_tag" type="text">
-					<div id="submit_tag" class="clicker border navi marker" style="margin-left:5px;">
-						追加
-					</div>	
-				</div>
-				<div class="flex_box koyoso" style="flex-grow:1;">
-					<div class="navi marker"> &raquo; </div>
-					<div id="tagged" style="flex-grow:1;border:1px solid #f3f3f3;">
-						<span class="mExplain" style="font-style:italic;font-size:0.9em;">
-							ここには設定済みのタグ、説明文が一覧で表示されます
-						</span>
-					</div>
-				</div>
-			</div>		
-		</div>
-		<div id="panel_tgr" class="clicker , panel" style="text-align:center;">
-			<div id="panel_arr" class="rot">
-				&raquo;
-			</div>
-		</div>
+	</div>
+	<div id="cnt_panel" class="top">
+<!-- jsx -->
 	</div>
 	<div id="grid_area" class="contents" style="flex-grow:1;">
 	</div>

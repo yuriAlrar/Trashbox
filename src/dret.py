@@ -10,9 +10,6 @@ import random
 import datetime
 import locale
 import hashlib
-import urllib
-import urllib.parse
-import urllib.request
 import datetime
 import codecs
 import http
@@ -24,7 +21,7 @@ import struct
 import mimetypes
 import datetime
 import random
-sys.path.append('/var/www/trashbox/source/src')
+sys.path.append('/var/www/trashbox/Trashbox/src')
 import extlib
 import json
 import handler

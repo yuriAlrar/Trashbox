@@ -14,7 +14,7 @@ import http.cookies
 import http.cookiejar
 import mimetypes
 import json
-sys.path.append('/var/www/trashbox/source/src')
+sys.path.append('/var/www/trashbox/Trashbox/src')
 class extlib:
 	def hashcode(self,i,s):
 		d = datetime.datetime.today()

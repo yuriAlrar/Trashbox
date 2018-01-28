@@ -18,7 +18,7 @@ import mimetypes
 import datetime
 import binascii
 import pickle
-sys.path.append('/var/www/trashbox/source/src')
+sys.path.append('/var/www/trashbox/Trashbox/src')
 import extlib
 import handler
 

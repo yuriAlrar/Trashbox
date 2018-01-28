@@ -60,7 +60,7 @@ function clear_grid(){
 function push_grid( object , id ){
 	document.getElementById("grid_area").innerHTML += 
 	"<div id='i" + id + "' class='clicker grid border text_wrap'><div>" + object.name + "</div>" +
-	"<div class='grid_add' style='text-align:right;'>" + 
+	"<div class='mNotice' style='font-size:0.8em;text-align:right;'>" + 
 		(object.ext).replace(".","") +
 		"/" + 
 		RAunit(object.size) + 
@@ -196,13 +196,14 @@ function initial_proc(){
 	customPwd();
 }
 document.addEventListener("DOMContentLoaded",function(){
+/***
 	var _fina = document.getElementById("filename");
 	var _evt_fina = document.getElementById("evt_fina")
 	var _hud  = document.getElementById("hud");
 	var _sub = document.getElementById("panel_sub");
 	initial_proc();
 	dir_rqs();
-/** body event */
+// body event
 	let _body = document.getElementById("body");
 	_body.addEventListener( "dragover" , function(evt){
 		evt.preventDefault();
@@ -223,22 +224,22 @@ document.addEventListener("DOMContentLoaded",function(){
 		if( _sub.style.height == "0px" ) _tgr.click();
 		fp(files[0]);
 	} , false );
-/** legacy file open */
+// legacy file open
 	var _spd  = document.getElementById("legacy_fp");
 	_spd.addEventListener( "change" , function(evt){
 		_fina.innerHTML = _spd.files[0].name;
 		if( _sub.style.height == "0px" ) _tgr.click();
 		fp(_spd.files[0]);
 	} , false );
-/** panel triger */
+// panel triger
 	var _tgr = document.getElementById("panel_tgr");
 	_tgr.addEventListener("click" , function(){
 		( _sub.style.height == "0px" ) ? ( tgr_option(_sub) ) : ( tgr_clear(_sub) );
 	} , false );
-/** password */
+// password
 	var _pws = document.getElementById("pws");
 	_pws.addEventListener("click" , customPwd  ,false);
-/** add tag */
+// add tag
 	let _tag = document.getElementById("submit_tag");
-	
+/***/	
 },false);

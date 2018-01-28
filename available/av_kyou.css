@@ -4,34 +4,6 @@
 ・再利用できるようなスタイルシートはこちらに記述
 ***/
 	@font-face{
-		font-family: 'akko';
-		src: url('./font/AkkoRoundedPro-Thin.otf') format('truetype');
-	}
-	@font-face{
-		font-family: 'consola';
-		src: url('./font/consola.ttf') format('truetype');
-	}
-	@font-face{
-		font-family: 'meiryo';
-		src: url('./font/meiryo.ttc') format('truetype');
-	}
-	@font-face{
-		font-family: 'myr_r';
-		src: url('./font/MyriadPro-Regular.otf') format('truetype');
-	}
-	@font-face{
-		font-family:'tr909';
-		src: url('./font/TR-909.ttf') format('truetype');
-	}
-	@font-face{
-		font-family:'bird';
-		src: url('./font/BIRDMAN_.TTF') format('truetype');
-	}
-	@font-face{
-		font-family:'toa';
-		src: url('./font/TOA_Heavy_Industries.woff') format('truetype');
-	}
-	@font-face{
 		font-family:'dosis_l';
 		src:url('./font/Dosis-Light.otf') format('truetype');
 	}
@@ -42,10 +14,6 @@
 	@font-face{
 		font-family:'dosis_l';
 		src:url('./font/Dosis-Light.otf') format('truetype');
-	}
-	@font-face{
-		font-family:'inc';
-		src:url('./font/Inconsolata.otf') format('truetype');
 	}
 	@font-face{
 		font-family:'srchan';
@@ -109,8 +77,8 @@
 		display:flexbox;
 		display:-webkit-flex;
 		height:auto;
-		margin-left:10px;
-		margin-right:10px;
+		padding-left:10px;
+		padding-right:10px;
 		text-align:left;
 		overflow:hidden;
 	}
@@ -288,6 +256,9 @@
 	a:active{
 		color:#6495ED;
 	}
+	div{
+		text-align:left;
+	}
 	input{
 		display:block;
 		background-color:rgba(0,0,0,0);
@@ -297,20 +268,26 @@
 	input:focus{
 		display:block;
 		background-color:rgba(0,0,0,0);
-		border:solid 1px #00A4AC;
+		border:solid 1px #6495ED;
 		font-family:'dosis_m','srchan';
 	}
 	.mText{
-		color:#696969;
+		color:#3F3F3F;
 	}
 	.mActive{
-		color:#00A4AC;
+		color:#6495ED;
 	}
 	.mNotice{
 		color:#38B48B;
 	}
+	.mSelect{
+		font-size:0.9em;
+		color:#3F3F3F;
+	}
 	.mExplain{
-		color:#f8b500;
+		font-style:italic;
+		font-size:0.9em;
+		color:#f6ad49;
 	}
 	.mCaution{
 		color:#EB6101;

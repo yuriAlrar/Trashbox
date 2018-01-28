@@ -24,6 +24,7 @@
 		box-sizing:border-box;
 		width:100%;
 		height:auto;
+		text-align:center;
 		padding-top:5px;
 		padding-bottom:5px;
 		color:rgba(69,69,69,1);
@@ -73,8 +74,10 @@
 	.navi{
 		position:relative;
 		text-align:center;
-		padding-left:10px;
-		padding-right:10px;
+		margin-left:5px;
+		margin-right:5px;
+		padding-left:5px;
+		padding-right:5px;
 		cursor:default;
 	}
 	.marker{
@@ -108,13 +111,10 @@
 		padding:10px;
 		margin:10px;
 	}
-	.grid_add{
-		color:rgba(100,149,237,1);
-		font-size:0.8em;
-	}
 	.koyoso{
 		position:relative;
 		box-sizing:border-box;
+		text-align:left;
 		margin-left:10px;
 		margin-right:10px;
 		padding-left:10px;
@@ -137,11 +137,20 @@
 		border-bottom:1px solid rgba(216,216,216,1);
 	}
 	#panel_tgr:hover .rot{
-		color:rgba(133,133,133,1);
+		color:#6495ED;
 	}
 	.rot{
 		transform:rotate( 90deg );
 		border:0px solid rgba(1,1,1,1);
+		text-align:center;	
+	}
+	#panel_tgr:hover .revRot{
+		color:#6495ED;
+	}
+	.revRot{
+		transform:rotate( -90deg );
+		border:0px solid rgba(1,1,1,1);
+		text-align:center;	
 	}
 	#inp_area{
 		position:absolute;
