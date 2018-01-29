@@ -126,12 +126,12 @@ class UploadFlowPanel extends React.Component{
 	}
 	fileLoader(e){
 		const fn = e.target.files[0].name;
-		this.setState({
-			fileName:fn
-		});
 		this.viewFilename(fn);
 	}
 	viewFilename(fn){
+		this.setState({
+			fileName:fn
+		});
 		ReactDOM.render(
 			<span>
 				{ fn }
@@ -211,30 +211,67 @@ class MainContentPanel extends React.Component{
 		);
 	}
 }
-class AddPanel extends React.Component {
+class Hud extends React.Component{
     constructor(props){
         super(props);
-        this.state = {
-			viewState:"none",
-			dataList:new _DATA_LIST
-		};
-		this.handleChange = this.handleChange.bind(this);
-	}
-	handleChange(){
-		this.setState({
-			viewState : ( this.state.viewState == "none" ) ? "block" : "none",
-		});
-		console.log(this.state.viewState);
 	}
     render(){
         return(
-			<div>
-				<MainContentPanel dataList={this.state.dataList} />
+			<div id="hud" className="hud" style={{display:this.props.hud}}>
 			</div>
+		);
+	}
+}
+class AddPanel extends React.Component {
+//DataListはここで管理
+    constructor(props){
+        super(props);
+        this.state = {
+			hud:"none",
+			viewState:"none",
+			dataList:new _DATA_LIST
+		};
+		this.viewOverlay = this.viewOverlay.bind(this);
+		this.hideOverlay = this.hideOverlay.bind(this);
+		this.dropped = this.dropped.bind(this);
+	}
+	viewOverlay(e){
+		this.setState({
+			hud:"block"
+		});
+		console.log("sss");
+	}
+	hideOverlay(e){
+		e.preventDefault();
+		e.stopPropagation();
+		this.setState({
+			hud:"none"
+		});		
+		console.log("d");
+	}
+	dropped(e){
+		e.preventDefault();
+		this.hideOverlay(e);
+		console.log("e");
+	}
+    render(){
+        return(
+		<div id="render_area" className="flex_v" style={{height:"100%"}}
+			onDragOver={this.viewOverlay} 
+			onDragLeave={this.hideOverlay} 
+			onDrop={this.dropped}
+		>
+			<MainContentPanel dataList={this.state.dataList} />
+			<div id="grid_area" className="contents" style={{flex:1}}>
+			</div>
+			<div style={{width:"100vw",height:"10px"}}>
+			</div>
+			<Hud hud={this.state.hud} />
+		</div>
         );
     }
 };
 ReactDOM.render(
     <AddPanel />,
-    document.getElementById("cnt_panel")
+    document.getElementById("jsx")
 );

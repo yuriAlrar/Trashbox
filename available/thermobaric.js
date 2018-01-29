@@ -203,27 +203,31 @@ document.addEventListener("DOMContentLoaded",function(){
 	var _sub = document.getElementById("panel_sub");
 	initial_proc();
 	dir_rqs();
+/***/
 // body event
 	let _body = document.getElementById("body");
 	_body.addEventListener( "dragover" , function(evt){
 		evt.preventDefault();
-		evt.stopPropagation();
-		_hud.style.display = "block";
+//		evt.stopPropagation();
+//		_hud.style.display = "block";
 	} , false );
 	_body.addEventListener( "dragleave" , function(evt){
 		evt.preventDefault();
-		evt.stopPropagation();
-		_hud.style.display = "none";
+//		evt.stopPropagation();
+//		_hud.style.display = "none";
 	} , false );
 	_body.addEventListener( "drop" , function(evt){
 		evt.preventDefault();
-		evt.stopPropagation();
+//		evt.stopPropagation();
+/**
 		_hud.style.display = "none";
 		var files = evt.dataTransfer.files;
 		_fina.innerHTML = files[0].name;
 		if( _sub.style.height == "0px" ) _tgr.click();
 		fp(files[0]);
+***/
 	} , false );
+/***
 // legacy file open
 	var _spd  = document.getElementById("legacy_fp");
 	_spd.addEventListener( "change" , function(evt){
