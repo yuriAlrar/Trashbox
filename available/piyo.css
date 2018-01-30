@@ -89,7 +89,7 @@
 	.state{
 		position:relative;
 		text-align:center;
-		width:100px;
+		min-width:120px;
 	}
 	.clicker{
 		cursor:pointer;

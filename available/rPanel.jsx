@@ -119,19 +119,27 @@ class UploadFlowPanel extends React.Component{
     constructor(props){
         super(props);
         this.state = {
-			
+			step:0,
 			loadStatus:"待機",
 			sendStatus:"待機",
 			sendProgress:0,
 			dataList:this.props.dataList,
 		};
 		this.setLS = this.setLS.bind(this);
+		this.setStep = this.setStep.bind(this);
 		this.preliminary = this.preliminary.bind(this);
 		this.fileLoader = this.fileLoader.bind(this);
+		this.sender = this.sender.bind(this);
 	}
 	setLS(m){
 		this.setState({
 			loadStatus:m
+		});
+	}
+	setStep(m){
+		const i = ( m !== undefined ) ? m : this.state.step + 1;
+		this.setState({
+			step:i
 		});
 	}
 	preliminary(e){
@@ -140,19 +148,26 @@ class UploadFlowPanel extends React.Component{
 	fileLoader(f){
 		console.log("fileLoader");
 		let temp = this.props.dataList;
+		const ss = this.setStep;
 		const ls = this.setLS;
 		temp.state.load = function(){
 			ls("ロード開始");
+			ss();
 		}
-		temp.state.loading = function(){
-			ls("ロード中");
+		temp.state.loading = function(ald){
+			ls("ロード中：" + ald + "%");
 		}
 		temp.state.loaded = function(){
 			ls("準備完了");
+			ss();
 		}
 		this.state.dataList.fp(f);
 	}
+	sender(){
+		console.log(this.state.step);
+	}
 	render(){
+		const cn = (["marker",( this.state.viewState == "none" ) ? "rot" : "revRot"].join(" "));
 		return(
 			<div className="panel flex_box">
 				<div className="flex_box inner_panel">
@@ -168,13 +183,13 @@ class UploadFlowPanel extends React.Component{
 						{this.props.dataList.name}
 					</div>
 					<div id="navi_2"  className="navi marker forbidden"> &raquo; </div>
-					<div id="state_2" className="state mNotice">
+					<div id="state_2" className="state mNotice text_wrap">
 						{this.state.loadStatus}
 					</div>
 				</div>
 				<div className="flex_box inner_panel">
 					<div id="navi_3_1" className="navi marker forbidden"> &raquo; </div>
-					<div id="submit_3" className="clicker border navi marker forbidden">
+					<div id="submit_3" className="clicker border navi marker forbidden text_wrap" onClick={this.sender}>
 						アップロード
 					</div>
 					<div id="navi_3_2" className="navi marker forbidden"> &raquo; </div>

@@ -159,8 +159,7 @@ _DATA_LIST.prototype.fp = function(file){
 		reader.readAsArrayBuffer( chunk );
 		reader.onload = function() {
 			let ald = Math.floor( fpp * number * 100 );
-			datalist.state.loading();
-//			_st2.innerHTML = "ロード中:" + ald + "%";
+			datalist.state.loading(ald);
 			let refer = new _REFER();
 			refer.raw = toBase64( new Uint8Array( reader.result ) );
 			datalist.list[number] = refer;
@@ -182,20 +181,16 @@ let load_state = function(){
 	this.load;
 	this.loading;
 	this.loaded;
+	this.callback;
 }
 load_state.prototype.load = function(){
-	var gst = "rgba(69,69,69,0.5)";
-	var disp = "rgba(69,69,69,1)";
-	document.getElementById("submit_3").style.color = gst;
-	document.getElementById("navi_2").style.color = disp;
-	document.getElementById("navi_3_1").style.color = disp;
-	document.getElementById("state_2").innerHTML = "ロード開始";	
+	return;
 }
 load_state.prototype.loading = function(){
-	document.getElementById("state_2").innerHTML = "ロード中";	
+	return;
 }
 load_state.prototype.loaded = function(){
-	document.getElementById("state_2").innerHTML = "準備完了";	
+	return;
 }
 var nameCypher = function(){
 	if( document.getElementById("ncy").checked ){
