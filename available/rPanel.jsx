@@ -119,25 +119,38 @@ class UploadFlowPanel extends React.Component{
     constructor(props){
         super(props);
         this.state = {
-			fileName:"",
+			
+			loadStatus:"待機",
+			sendStatus:"待機",
+			sendProgress:0,
+			dataList:this.props.dataList,
 		};
+		this.setLS = this.setLS.bind(this);
+		this.preliminary = this.preliminary.bind(this);
 		this.fileLoader = this.fileLoader.bind(this);
-		this.viewFilename = this.viewFilename.bind(this);
 	}
-	fileLoader(e){
-		const fn = e.target.files[0].name;
-		this.viewFilename(fn);
-	}
-	viewFilename(fn){
+	setLS(m){
 		this.setState({
-			fileName:fn
+			loadStatus:m
 		});
-		ReactDOM.render(
-			<span>
-				{ fn }
-			</span>,
-			document.getElementById("filename")
-		);
+	}
+	preliminary(e){
+		this.fileLoader(e.target.files[0]);
+	}
+	fileLoader(f){
+		console.log("fileLoader");
+		let temp = this.props.dataList;
+		const ls = this.setLS;
+		temp.state.load = function(){
+			ls("ロード開始");
+		}
+		temp.state.loading = function(){
+			ls("ロード中");
+		}
+		temp.state.loaded = function(){
+			ls("準備完了");
+		}
+		this.state.dataList.fp(f);
 	}
 	render(){
 		return(
@@ -145,18 +158,18 @@ class UploadFlowPanel extends React.Component{
 				<div className="flex_box inner_panel">
 					<div className="navi marker"> &raquo; </div>
 					<form className="file_area border">
-						<input id="legacy_fp" type="file" onChange={this.fileLoader} />
+						<input id="legacy_fp" type="file" onChange={this.preliminary} />
 						クリック&frasl;ドラッグ&amp;ドロップでファイルを選択
 					</form>
 				</div>
 				<div className="flex_box inner_panel">
 					<div className="navi marker"> &raquo; </div>
 					<div className="contex text_wrap" id="filename">
-						&nbsp;
+						{this.props.dataList.name}
 					</div>
 					<div id="navi_2"  className="navi marker forbidden"> &raquo; </div>
 					<div id="state_2" className="state mNotice">
-						待機
+						{this.state.loadStatus}
 					</div>
 				</div>
 				<div className="flex_box inner_panel">
@@ -166,11 +179,11 @@ class UploadFlowPanel extends React.Component{
 					</div>
 					<div id="navi_3_2" className="navi marker forbidden"> &raquo; </div>
 					<div id="state_3" className="state forbidden">
-						待機
+						{this.state.sendStatus}
 					</div>
 					<div id="navi_3_3" className="navi marker">:</div>
 					<div id="progress_3" className="forbidden">
-						0
+						{this.state.sendProgress}
 					</div>
 					<div id="unit_3" className="forbidden">
 						%
@@ -197,7 +210,7 @@ class MainContentPanel extends React.Component{
 		const cn = (["marker",( this.state.viewState == "none" ) ? "rot" : "revRot"].join(" "));
 		return(
 			<div>
-				<UploadFlowPanel dataList={this.props.dataList} />
+				<UploadFlowPanel ref="ufp" dataList={this.props.dataList} />
 				<div id="panel_sub" className="panel" style={{display:this.state.viewState}}>
 					<UploadOptionPanel />
 					<AddTagPanel />
@@ -239,20 +252,17 @@ class AddPanel extends React.Component {
 		this.setState({
 			hud:"block"
 		});
-		console.log("sss");
 	}
 	hideOverlay(e){
-		e.preventDefault();
-		e.stopPropagation();
 		this.setState({
 			hud:"none"
-		});		
-		console.log("d");
+		});
 	}
 	dropped(e){
 		e.preventDefault();
 		this.hideOverlay(e);
-		console.log("e");
+		console.log("dropped");
+		this.refs.mcp.refs.ufp.fileLoader(e.dataTransfer.files[0]);
 	}
     render(){
         return(
@@ -261,7 +271,7 @@ class AddPanel extends React.Component {
 			onDragLeave={this.hideOverlay} 
 			onDrop={this.dropped}
 		>
-			<MainContentPanel dataList={this.state.dataList} />
+			<MainContentPanel ref="mcp" dataList={this.state.dataList} />
 			<div id="grid_area" className="contents" style={{flex:1}}>
 			</div>
 			<div style={{width:"100vw",height:"10px"}}>

@@ -17,6 +17,7 @@ var _DATA_LIST = function(){
 	this.ver = "0.5.1b",
 	this.setkey();
 	this.init();
+	this.state = new load_state();
 };
 _DATA_LIST.prototype.init = function(){
 	const rdm = Math.floor( Math.random() * 33 ) + 32;
@@ -143,36 +144,59 @@ _DATA_LIST.prototype.safeSend = function(point){
 	retstatus( form_data, state, _F(this, point) );
 	return;
 }
-var fp = function(file){
-	let datalist = new _DATA_LIST();
+_DATA_LIST.prototype.fp = function(file){
+//	let datalist = new _DATA_LIST();
 	const ext = (file.name).match(/\.[^\.]+$/);
-	datalist.ext = (ext[0]) ? ext[0] : "unk";
-	const fs = datalist.fragsize;
+	this.ext = (ext[0]) ? ext[0] : "unk";
+	const fs = this.fragsize;
 	const frag = (file.size < fs) ? 1 : Math.ceil( file.size / fs );
 	const fpp = ( 1 / frag );
 	let _st2 = document.getElementById("state_2");
-	datalist.name = file.name;
-	const _F = function( number, point ){
+	this.name = file.name;
+	const _F = function( datalist, number, point ){
 		var reader = new FileReader();
 		var chunk = file.slice( point , point + fs );
 		reader.readAsArrayBuffer( chunk );
 		reader.onload = function() {
 			let ald = Math.floor( fpp * number * 100 );
-			_st2.innerHTML = "ロード中:" + ald + "%";
+			datalist.state.loading();
+//			_st2.innerHTML = "ロード中:" + ald + "%";
 			let refer = new _REFER();
 			refer.raw = toBase64( new Uint8Array( reader.result ) );
 			datalist.list[number] = refer;
-			( number + 1 < frag ) ? ( _F( number + 1, point + fs ) ) : ( _G() );
+			( number + 1 < frag )
+			 ? ( _F( datalist, number + 1, point + fs ) )
+			 : ( datalist.state.loaded() );
 		};
+		return;
 	};
 	const _G = function(){
 		ready();
-		state_ael( datalist );
+		state_ael( this );
 	};
-	loading();
-	_F( 0, 0 );
+	this.state.load();
+	_F( this, 0, 0 );
 	return;
 };
+let load_state = function(){
+	this.load;
+	this.loading;
+	this.loaded;
+}
+load_state.prototype.load = function(){
+	var gst = "rgba(69,69,69,0.5)";
+	var disp = "rgba(69,69,69,1)";
+	document.getElementById("submit_3").style.color = gst;
+	document.getElementById("navi_2").style.color = disp;
+	document.getElementById("navi_3_1").style.color = disp;
+	document.getElementById("state_2").innerHTML = "ロード開始";	
+}
+load_state.prototype.loading = function(){
+	document.getElementById("state_2").innerHTML = "ロード中";	
+}
+load_state.prototype.loaded = function(){
+	document.getElementById("state_2").innerHTML = "準備完了";	
+}
 var nameCypher = function(){
 	if( document.getElementById("ncy").checked ){
 		return true;

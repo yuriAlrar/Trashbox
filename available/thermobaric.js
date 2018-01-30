@@ -1,12 +1,3 @@
-function loading(){
-	var gst = "rgba(69,69,69,0.5)";
-	var disp = "rgba(69,69,69,1)";
-	document.getElementById("submit_3").style.color = gst;
-
-	document.getElementById("navi_2").style.color = disp;
-	document.getElementById("navi_3_1").style.color = disp;
-	document.getElementById("state_2").innerHTML = "ロード開始";
-};
 function ready(){
 	var disp = "rgba(69,69,69,1)";
 	document.getElementById("navi_2").style.display = disp;
@@ -43,16 +34,6 @@ function state_ael( listObject ){
 		listObject.encrypt();
 	};
 	_sbt.addEventListener("click" , f , false );
-}
-function tgr_clear( _tgr ){
-	_tgr.style.height = "0px";
-	_tgr.style.display = "none";
-	document.getElementById("panel_arr").style.transform = "rotate(90deg)"
-}
-function tgr_option( _tgr ){
-	_tgr.style.display = "block";
-	_tgr.style.height = "auto";
-	document.getElementById("panel_arr").style.transform = "rotate(-90deg)"
 }
 function clear_grid(){
 	document.getElementById("grid_area").innerHTML = "";
@@ -192,58 +173,24 @@ function view( h ){
 		}( es[ list[i] ] , i),false);
 	}
 }
-function initial_proc(){
-	customPwd();
-}
 document.addEventListener("DOMContentLoaded",function(){
-/***
-	var _fina = document.getElementById("filename");
-	var _evt_fina = document.getElementById("evt_fina")
-	var _hud  = document.getElementById("hud");
-	var _sub = document.getElementById("panel_sub");
-	initial_proc();
-	dir_rqs();
-/***/
 // body event
 	let _body = document.getElementById("body");
 	_body.addEventListener( "dragover" , function(evt){
 		evt.preventDefault();
 //		evt.stopPropagation();
-//		_hud.style.display = "block";
 	} , false );
 	_body.addEventListener( "dragleave" , function(evt){
 		evt.preventDefault();
 //		evt.stopPropagation();
-//		_hud.style.display = "none";
 	} , false );
 	_body.addEventListener( "drop" , function(evt){
 		evt.preventDefault();
 //		evt.stopPropagation();
-/**
-		_hud.style.display = "none";
-		var files = evt.dataTransfer.files;
-		_fina.innerHTML = files[0].name;
-		if( _sub.style.height == "0px" ) _tgr.click();
-		fp(files[0]);
-***/
 	} , false );
 /***
-// legacy file open
-	var _spd  = document.getElementById("legacy_fp");
-	_spd.addEventListener( "change" , function(evt){
-		_fina.innerHTML = _spd.files[0].name;
-		if( _sub.style.height == "0px" ) _tgr.click();
-		fp(_spd.files[0]);
-	} , false );
-// panel triger
-	var _tgr = document.getElementById("panel_tgr");
-	_tgr.addEventListener("click" , function(){
-		( _sub.style.height == "0px" ) ? ( tgr_option(_sub) ) : ( tgr_clear(_sub) );
-	} , false );
 // password
 	var _pws = document.getElementById("pws");
 	_pws.addEventListener("click" , customPwd  ,false);
-// add tag
-	let _tag = document.getElementById("submit_tag");
 /***/	
 },false);
