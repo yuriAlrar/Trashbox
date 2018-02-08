@@ -1,40 +1,3 @@
-function ready(){
-	var disp = "rgba(69,69,69,1)";
-	document.getElementById("navi_2").style.display = disp;
-	document.getElementById("state_2").innerHTML = "準備完了";
-	document.getElementById("submit_3").style.color = disp;
-	document.getElementById("navi_3_2").style.color = disp;
-};
-function state_2(){
-	var gst = "rgba(69,69,69,0.5)";
-	var disp = "rgba(69,69,69,1)";
-	document.getElementById("submit_3").style.color = gst;
-
-	document.getElementById("state_3").style.color = disp;
-	document.getElementById("navi_3_3").style.color = disp;
-	document.getElementById("progress_3").style.color = disp;
-	document.getElementById("unit_3").style.color = disp;
-	document.getElementById("state_2").innerHTML = "暗号開始";
-	document.getElementById("state_3").innerHTML = "準備完了";
-};
-function state_3(){
-	var gst = "rgba(69,69,69,0.5)";
-	var disp = "rgba(69,69,69,1)";
-	document.getElementById("state_2").innerHTML = "暗号完了";
-	document.getElementById("state_3").innerHTML = "送信完了";
-};
-function state_ael( listObject ){
-	var _sbt = document.getElementById("submit_3");
-	var f = function(){
-		_sbt.removeEventListener("click" , f , false);
-		state_2();
-		listObject.setpwd();
-		listObject.repname();
-		document.getElementById("sluch").innerHTML = listObject.pf;
-		listObject.encrypt();
-	};
-	_sbt.addEventListener("click" , f , false );
-}
 function clear_grid(){
 	document.getElementById("grid_area").innerHTML = "";
 }
@@ -174,23 +137,14 @@ function view( h ){
 	}
 }
 document.addEventListener("DOMContentLoaded",function(){
-// body event
 	let _body = document.getElementById("body");
 	_body.addEventListener( "dragover" , function(evt){
 		evt.preventDefault();
-//		evt.stopPropagation();
 	} , false );
 	_body.addEventListener( "dragleave" , function(evt){
 		evt.preventDefault();
-//		evt.stopPropagation();
 	} , false );
 	_body.addEventListener( "drop" , function(evt){
 		evt.preventDefault();
-//		evt.stopPropagation();
 	} , false );
-/***
-// password
-	var _pws = document.getElementById("pws");
-	_pws.addEventListener("click" , customPwd  ,false);
-/***/	
 },false);

@@ -1,6 +1,7 @@
 "use strict";
 var _DATA_LIST = function(){
 	this.list = [];
+	this.tag = [];
 	this.key = false;
 	this.name = null;
 	this.ext = "unknown";
@@ -11,7 +12,6 @@ var _DATA_LIST = function(){
 	this.options = {};
 	this.flag = false;
 	this.fragsize = 4194304;
-//	this.fragsize = 2097152;
 	this.flag_word = "true";
 	this.cflag = null;
 	this.ver = "0.5.1b",
@@ -63,7 +63,7 @@ _DATA_LIST.prototype.checker = function(){
 	return this.flag;
 };
 _DATA_LIST.prototype.encrypt = function(){
-	let _st2 = document.getElementById("state_2");
+	this.repname();
 	const _F = function( datalist , point ){
 		let refer = datalist.list[point];
 		let encrypted = CryptoJS.AES.encrypt( refer.raw , datalist.pf , datalist.options );
@@ -73,21 +73,24 @@ _DATA_LIST.prototype.encrypt = function(){
 		refer.name = datalist.key + "_" + point;
 		datalist.list[point] = refer;
 		if( datalist.list[point + 1] ){
-			_st2.innerHTML = "暗号中:" + Math.floor( ( ( point + 1 ) / datalist.list.length) * 100) + "%";
+			datalist.state.loading( Math.floor( ( ( point + 1 ) / datalist.list.length) * 100) );
 			window.setTimeout(function(){
 				_F( datalist , point + 1 );
 			} , 16);
 		}
 		else{
+			datalist.state.loaded();
+/**
 			datalist.dumpsize();
-			state_3();
 			sendPst( datalist );
 			datalist.safeSend(0);
 			dir_rqs();
 			breakKey();
+**/
 		}
 		return;
 	}
+	this.state.load();
 	_F( this , 0 );
 	return;
 };
@@ -146,6 +149,7 @@ _DATA_LIST.prototype.safeSend = function(point){
 }
 _DATA_LIST.prototype.fp = function(file){
 //	let datalist = new _DATA_LIST();
+	this.list = [];
 	const ext = (file.name).match(/\.[^\.]+$/);
 	this.ext = (ext[0]) ? ext[0] : "unk";
 	const fs = this.fragsize;
@@ -169,14 +173,16 @@ _DATA_LIST.prototype.fp = function(file){
 		};
 		return;
 	};
-	const _G = function(){
-		ready();
-		state_ael( this );
-	};
 	this.state.load();
 	_F( this, 0, 0 );
 	return;
 };
+_DATA_LIST.prototype.add_tag = function(tag){
+	this.tag = tag;
+}
+_DATA_LIST.prototype.clear_tag = function(){
+	this.list = [];
+}
 let load_state = function(){
 	this.load;
 	this.loading;

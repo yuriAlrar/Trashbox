@@ -27,7 +27,6 @@
 		text-align:center;
 		padding-top:5px;
 		padding-bottom:5px;
-		color:rgba(69,69,69,1);
 		background-color:rgba(255,255,255,1);
 	}
 	div.panel > .inner_panel{
@@ -114,11 +113,13 @@
 	.koyoso{
 		position:relative;
 		box-sizing:border-box;
+		align-items:flex-start;
 		text-align:left;
 		margin-left:10px;
 		margin-right:10px;
 		padding-left:10px;
 		padding-right:10px;
+		margin-bottom:15px;
 	}
 	.text_wrap{
 		overflow: hidden;

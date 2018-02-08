@@ -272,24 +272,32 @@
 		font-family:'dosis_m','srchan';
 	}
 	.mText{
-		color:#3F3F3F;
+		font-size:1rem;
+		color:#454545;
+	}
+	.mPlaceholder{
+		font-size:0.9rem;
+		color:#AFAFAF;
 	}
 	.mActive{
+		font-size:1rem;
 		color:#6495ED;
 	}
 	.mNotice{
+		font-size:1rem;
 		color:#38B48B;
 	}
 	.mSelect{
-		font-size:0.9em;
+		font-size:0.8rem;
 		color:#3F3F3F;
 	}
 	.mExplain{
 		font-style:italic;
-		font-size:0.9em;
+		font-size:0.9rem;
 		color:#f6ad49;
 	}
 	.mCaution{
+		font-size:1rem;
 		color:#EB6101;
 	}
 	input[type="checkbox"]{
@@ -297,6 +305,7 @@
 		margin:5px;
 	}
 	input[type="text"]{
+		padding:2px;
 		position:relative;
 	}
 	input[type="text"][disabled]{
