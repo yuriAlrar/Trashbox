@@ -316,7 +316,8 @@
 	}
 	input[type="password"][disabled]{
 		position:relative;
-		border:solid 1px rgba(69,69,69,0.1);
+		border:solid 1px #EFEFEF;
+		background-color:#FAFAFA;
 	}
 	.input_opt{
 		width:150px;

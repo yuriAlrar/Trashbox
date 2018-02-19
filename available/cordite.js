@@ -3,7 +3,7 @@ var _DATA_LIST = function(){
 	this.list = [];
 	this.tag = [];
 	this.key = false;
-	this.name = null;
+	this.name = "";
 	this.ext = "unknown";
 	this.namehasher = null;
 	this.namecypher = null;
@@ -30,13 +30,6 @@ _DATA_LIST.prototype.setiv = function( v ){
 _DATA_LIST.prototype.setkey = function(){
 	var cookie = document.cookie;
 	this.key = cookie.split(";")[0].split("=")[1];
-	return;
-};
-_DATA_LIST.prototype.setpwd = function(){
-	var originKey = customPwd();
-	if( originKey != null ){
-		this.pf = originKey;
-	}
 	return;
 };
 var _REFER = function(){
@@ -151,7 +144,7 @@ _DATA_LIST.prototype.fp = function(file){
 //	let datalist = new _DATA_LIST();
 	this.list = [];
 	const ext = (file.name).match(/\.[^\.]+$/);
-	this.ext = (ext[0]) ? ext[0] : "unk";
+	this.ext = (ext && ext[0]) ? ext[0] : "unk";
 	const fs = this.fragsize;
 	const frag = (file.size < fs) ? 1 : Math.ceil( file.size / fs );
 	const fpp = ( 1 / frag );
@@ -196,6 +189,13 @@ load_state.prototype.loading = function(){
 	return;
 }
 load_state.prototype.loaded = function(){
+	return;
+}
+let _HUB = function(){
+	this.hub = {};
+};
+_HUB.prototype.set_data = function(key,value){
+	this.hub[key] = value;
 	return;
 }
 var nameCypher = function(){
