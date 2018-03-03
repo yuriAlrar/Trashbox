@@ -93,13 +93,13 @@ class AddTagPanel extends React.Component{
 			<div className="flex_box" style={{flexWrap:"wrap",alignItems:"flex-start"}}>
 				<div className="flex_box" style={{alignItems:"center"}}>
 					<div className="arrow direct_arrow"></div>
-					<div class="ui mini action input">
+					<div className="ui mini action input">
 						<input type="text" placeholder="タグの追加"
 							value={this.state.newTag} 
 							onChange={this.setTag} 
 							onKeyPress={this.increaseTag}					
 						/>
-						<button class="ui mini button" onClick={this.increaseTag}>
+						<button className="ui mini button" onClick={this.increaseTag}>
 							追加
 						</button>
 					</div>
@@ -108,9 +108,9 @@ class AddTagPanel extends React.Component{
 				<div className={cn} style={{flex:1}}>
 					<TagWrapper dct={this.decreaseTag} list={this.state.tagContent} />
 				</div>
-				<div className="clicker border navi marker" onClick={this.clearTag} >
+				<button className="ui button mini" onClick={this.clearTag}>
 					全部消す
-				</div>
+				</button>
 			</div>
 		</div>
 		);
@@ -322,114 +322,152 @@ class UploadFlowPanel extends React.Component{
 				cryptoProgress:100
 			});
 			ss();
-			console.log(">>",this);
 		}
 		this.state.dataList.encrypt();
 	}
 	render(){
+/***
 		const st1Navi = ([
-			"navi", "marker", ( this.state.step > 0 ) ? "mText" : "forbidden"
+			"right","chevron","icon","divider"
 		].join(" "));
 		const st1Note = ([
 			"state", "mNotice", "text_wrap", ( this.state.step > 0 ) ? "mNotice" : "forbidden"
 		].join(" "));
 		const st2Navi = ([
-			"navi", "marker", ( this.state.step > 1 ) ? "mText" : "forbidden"
+			"arrow", " direct_arrow", ( this.state.step > 1 ) ? "" : "disable"
 		].join(" "));
 		const st2Send = ([
 			"clicker", "border", "navi", "marker","text_wrap", ( this.state.step > 1 ) ? "mText" : "forbidden"
 		].join(" "));
 		const st3Navi = ([
-			"navi", "marker", ( this.state.step > 2 ) ? "mText" : "forbidden"
+			"arrow", " direct_arrow", ( this.state.step > 2 ) ? "" : "disable"
 		].join(" "));
 		const st3Note = ([
-			"state", "mNotice", "text_wrap", ( this.state.step > 2 ) ? "mNotice" : "forbidden"
+			"mNotice", "text_wrap", ( this.state.step > 2 ) ? "mNotice" : "forbidden"
 		].join(" "));
-/***/
 		return(
 			<div className="panel flex_box" style={{flexWrap:"wrap"}}>
-				<div className="flex_box inner_panel">
-					<div className="arrow direct_arrow"></div>
-					<form className="file_area border mText">
-						<input id="legacy_fp" type="file" onChange={this.preliminary} />
-						クリック&frasl;ドラッグ&amp;ドロップでファイルを選択
-					</form>
-					<div className="arrow direct_arrow"></div>
-					<div className="contex text_wrap" id="filename">
+				<div className="ui large breadcrumb">
+					<i className="right chevron icon divider"></i>
+					<div className="section">
+						<form className="file_area border state mText">
+							<input id="legacy_fp" type="file" onChange={this.preliminary} />
+							クリック&frasl;ドラッグ&amp;ドロップでファイルを選択
+						</form>
+					</div>
+					<i className="right chevron icon divider"></i>
+					<div className="section text_wrap" id="filename" style={{width:"120px"}}>
 						{this.props.dataList.name}
 					</div>
-					<div className="arrow direct_arrow"></div>
-					<div className={st1Note}>
+					<i className="right chevron icon divider"></i>
+					<div className="section state">
 						{this.state.loadStatus}
 						:
 						{this.state.loadProgress}
 						%
 					</div>
 				</div>
-				<div className="flex_box inner_panel">
-					<div className="arrow direct_arrow"></div>
+				<div className="ui large breadcrumb">
+					<i className="right chevron icon divider"></i>
 					<div id="submit_3" 
-						className={st2Send} 
+						className="section"
 						onClick={this.sender}
 					>
-						アップロード
+						<div className="border state clicker">アップロード</div>
 					</div>
-					<div className="arrow direct_arrow"></div>
-					<div className={st3Note}>
+					<i className="right chevron icon divider"></i>
+					<div className="section">
 						{this.state.cryptoStatus}
 						:
 						{this.state.cryptoProgress}
 						%
 					</div>
-					<div className="arrow direct_arrow"></div>
-					<div id="state_3" className={st3Note}>
+					<i className="right chevron icon divider"></i>
+					<div id="state_3" className="section">
 						{this.state.sendStatus}
 					</div>
-					<div id="navi_3_3" className={st3Navi}>:</div>
-					<div id="progress_3" className={st3Navi}>
+					<div id="navi_3_3" className="section">:</div>
+					<div id="progress_3" className="section">
 						{this.state.sendProgress}
 					</div>
-					<div id="unit_3" className={st3Navi}>
+					<div id="unit_3" className="section">
 						%
 					</div>
 				</div>
 			</div>
 		);
 /***/
-/***
+/***/
+		const st1act = (["step", ( this.state.step == 0 ) ? "active" : ""].join(" "));
+		const st2act = (["step", ( this.state.step == 1 ) ? "active" : ""].join(" "));
+		const st3act = (["step", "clicker", ( this.state.step == 2 ) ? "active" : ""].join(" "));
+		const stFact = (["step", ( this.state.step >  2 ) ? "active" : ""].join(" "));
 		return(
 			<div className="ui small steps" style={{flexWrap:"wrap",flexGrow:1}}>
-				<span className="active step">
+				<span className={st1act}>
+					<form className="file_area">
+						<div className="content">
+							<div className="title">
+									<input id="legacy_fp" type="file"　className="" onChange={this.preliminary} />
+									ファイルの選択
+							</div>
+							<div className="description">
+								クリック/ドラッグ＆ドロップで選択
+								<br />
+								ファイル名:{this.props.dataList.name}
+							</div>
+						</div>
+					</form>
+				</span>
+				<span className={st2act}>
 					<div className="content">
-						<div className="title">ファイルを選択</div>
-						<form className="description file_area">
-							<input id="legacy_fp" type="file"　className="" onChange={this.preliminary} />
-							クリック＆ドラッグ＆ドロップで選択
-						</form>
+						<div className="title">ファイルの読み込み</div>
+						<div className="description">
+							選択されたファイルを読み込みます
+							<div className="flex_box state">
+								<div className="left mNotice">
+									{this.state.loadStatus}
+								</div>
+								<div className="right">
+									{this.state.loadProgress}
+								</div>
+								%
+							</div>
+						</div>
 					</div>
 				</span>
-				<span className="step">
+				<span className={st3act} onClick={this.sender}>
 					<div className="content">
-					<div className="title">{this.state.loadStatus} &raquo; {this.state.loadProgress} %</div>
-					<div className="description">ファイル名:{this.props.dataList.name}</div>
+						<div className="title">暗号開始</div>
+						<div className="description">
+							クリックで処理を続行、ファイルを暗号化します
+							<div className="flex_box state">
+								<div className="left mNotice">
+									{this.state.cryptoStatus}
+								</div>
+								<div className="right">
+									{this.state.cryptoProgress}
+								</div>
+								%
+							</div>
+						</div>
 					</div>
 				</span>
-				<span className="step clicker">
+				<span className={stFact}>
 					<div className="content">
-					<div className="title">アップロード</div>
-					<div className="description">クリックでアップロードを開始します</div>
-					</div>
-				</span>
-				<span className="step">
-					<div className="content">
-					<div className="title">{this.state.cryptoStatus} &raquo; {this.state.cryptoProgress} %</div>
-					<div className="description">ファイルを暗号化します</div>
-					</div>
-				</span>
-				<span className="step">
-					<div className="content">
-					<div className="title">{this.state.sendStatus}</div>
-					<div className="description">ファイルを送信するナリよ〜</div>
+						<div className="title">ファイルのアップロード</div>
+						<div className="description">
+							ファイルの送信を行います
+							<div className="flex_box state">
+								<div className="left mNotice">
+									{this.state.sendStatus}
+								</div>
+								<div className="right">
+									{this.state.sendProgress}
+								</div>
+								%
+							</div>
+						</div>
 					</div>
 				</span>
 			</div>
@@ -455,7 +493,7 @@ class MainContentPanel extends React.Component{
 		const cn = (["marker",( this.state.viewState == "none" ) ? "rot" : "revRot"].join(" "));
 		return(
 			<div>
-				<div className="flex_box koyoso" style={{width:"100%",justifyContent:"space-between"}}>
+				<div className="flex_box koyoso">
 					<UploadFlowPanel ref="ufp" dataList={this.props.dataList} hub={this.state.hub} />
 				</div>					
 				<div id="panel_sub" className="koyoso" style={{display:this.state.viewState}}>
