@@ -53,6 +53,8 @@ class AddTagPanel extends React.Component{
 			tagContent:list,
 			tagStatus:ts
 		});
+		const uel = list.map( encodeURIComponent );
+		this.state.hub.set_data("itc",uel);
 	}
 	increaseTag(e){
 		if( e.which != undefined && e.which != 13 ){
@@ -73,6 +75,8 @@ class AddTagPanel extends React.Component{
 			tagStatus:ts,
 			newTag:""
 		});
+		const uel = list.map( encodeURIComponent );
+		this.state.hub.set_data("itc",uel);
 	}
 	clearTag(e){
 		this.state.dataList.clear_tag();
@@ -103,7 +107,7 @@ class AddTagPanel extends React.Component{
 							追加
 						</button>
 					</div>
-					<div className="arrow direct_arrow"></div>
+					<div className="navi"></div>
 				</div>
 				<div className={cn} style={{flex:1}}>
 					<TagWrapper dct={this.decreaseTag} list={this.state.tagContent} />
@@ -126,14 +130,16 @@ class UploadOptionPanel extends React.Component{
 			hub:this.props.hub
 		};
 		this.setPw = this.setPw.bind(this);
+		this.state.hub.set_data("ifc",this.state.ifc);
+		this.state.hub.set_data("ifp",this.state.ifp);
     }
 	setPw(e){
 		this.setState({
 			pw : e.target.value,
 		});
+		this.state.hub.set_data("pw",e.target.value);
 	}
 	render(){
-		console.log( this.state );
 		return(
 			<div className="flex_box koyoso" style={{flexWrap:"wrap"}}>
 				<div className="ui checkbox">
@@ -147,7 +153,7 @@ class UploadOptionPanel extends React.Component{
 				<div className="ui checkbox"
 					onClick={() => {
 						const tf = !this.state.ifc;
-						this.setState({ifc: (tf)})
+						this.setState({ifc: (tf)});
 						this.state.hub.set_data("ifc",tf);
 					} }							
 				>
@@ -173,7 +179,7 @@ class UploadOptionPanel extends React.Component{
 						onClick={() => {
 							const tf = !this.state.ifp;
 							this.setState({ifp: (tf)})
-							this.state.hub.set_data("ifc",tp);
+							this.state.hub.set_data("ifp",tf);
 						} }							
 					>
 						<input type="checkbox" className="hidden"
@@ -223,7 +229,7 @@ class UploadOptionPanel extends React.Component{
 }
 class UploadFlowPanel extends React.Component{
 /** 
- * Step
+ *  Step
  * 	0:ファイル選択待機
  * 	1:ファイルロード中
  * 	2:ファイルロード完了
@@ -258,15 +264,14 @@ class UploadFlowPanel extends React.Component{
 		this.setState({
 			step:i
 		});
+		console.log("now step>>",this.state.step);
 	}
 	preliminary(e){
 		this.fileLoader(e.target.files[0]);
-		console.log("step>>",this.state.step);
 	}
 	fileLoader(f){
-		console.log(this.state.step);
 //ファイルロード中か、暗号開始後なら処理を中断
-		if(this.state.step == 1){
+		if(this.state.step != 0 && this.state.step != 2){
 			return;
 		}
 		let temp = this.props.dataList;
@@ -295,14 +300,25 @@ class UploadFlowPanel extends React.Component{
 		this.state.dataList.fp(f);
 	}
 	sender(){
-		console.log(this.props.hub);
-		console.log(this.state.dataList);
+//		console.log(this.state.dataList);
+		console.log(this.props.hub["hub"]);
 		if(this.state.step != 2){
 			return;
 		}
 		let temp = this.props.dataList;
+		const ifc = this.props.hub["hub"]["ifc"];
+		const ifp = this.props.hub["hub"]["ifp"];
+		const ipw = this.props.hub["hub"]["pw"];
+		const itc = this.props.hub["hub"]["itc"];
 		const ss = this.setStep;
 		const ls = this.setLS;
+		const sp = (param, status) => {
+			const np = Math.round( ( this.state.sendProgress + param ) * 100 ) / 100;
+			this.setState({
+				sendStatus:status,
+				sendProgress: np
+			});
+		};
 		temp.state.load = function(){
 			ls({
 				cryptoStatus:"暗号開始",
@@ -312,8 +328,8 @@ class UploadFlowPanel extends React.Component{
 		}
 		temp.state.loading = function(ald){
 			ls({
-				cryptoStatus:"暗号中",
-				cryptoProgress:ald
+				cryptoStatus: "暗号中",
+				cryptoProgress: ald
 			});
 		}
 		temp.state.loaded = function(){
@@ -323,85 +339,46 @@ class UploadFlowPanel extends React.Component{
 			});
 			ss();
 		}
-		this.state.dataList.encrypt();
+		console.log(">>>");
+		if( ifp ){
+			temp.setpwd(ipw);
+		}
+		temp.encrypt().then(function(value){
+			temp.state.load = function(){
+				ls({
+					sendStatus:"送信開始",
+					sendProgress:0
+				});
+				ss();
+			}
+			temp.state.loading = function(param, state){
+				sp(param * 100, "送信中");
+			}
+			temp.state.loaded = function(){
+				ls({
+					sendStatus:"送信完了",
+					sendProgress:100
+				});
+				ss();
+			}
+			temp.dumpsize();
+			sendPst(temp, ifc );
+			sendTag(temp, itc );
+			console.log(temp);
+			temp.safeSend().then(function(value){
+				dir_rqs();
+				breakKey();
+			});
+		});
 	}
 	render(){
-/***
-		const st1Navi = ([
-			"right","chevron","icon","divider"
+		const st1act = (["step", ( this.state.step == 0 ) ? "active" : "" ,( this.state.step >= 1 ) ? "disabled" : "" ].join(" "));
+		const st2act = (["step", ( this.state.step == 1 ) ? "active" : "" ,( this.state.step >= 3 ) ? "disabled" : "" ].join(" "));
+		const st3act = (["step", 
+			( this.state.step >= 2 && this.state.step <= 4 ) ? "active" : "",
+			( this.state.step >= 5 ) ? "disabled" : ""
 		].join(" "));
-		const st1Note = ([
-			"state", "mNotice", "text_wrap", ( this.state.step > 0 ) ? "mNotice" : "forbidden"
-		].join(" "));
-		const st2Navi = ([
-			"arrow", " direct_arrow", ( this.state.step > 1 ) ? "" : "disable"
-		].join(" "));
-		const st2Send = ([
-			"clicker", "border", "navi", "marker","text_wrap", ( this.state.step > 1 ) ? "mText" : "forbidden"
-		].join(" "));
-		const st3Navi = ([
-			"arrow", " direct_arrow", ( this.state.step > 2 ) ? "" : "disable"
-		].join(" "));
-		const st3Note = ([
-			"mNotice", "text_wrap", ( this.state.step > 2 ) ? "mNotice" : "forbidden"
-		].join(" "));
-		return(
-			<div className="panel flex_box" style={{flexWrap:"wrap"}}>
-				<div className="ui large breadcrumb">
-					<i className="right chevron icon divider"></i>
-					<div className="section">
-						<form className="file_area border state mText">
-							<input id="legacy_fp" type="file" onChange={this.preliminary} />
-							クリック&frasl;ドラッグ&amp;ドロップでファイルを選択
-						</form>
-					</div>
-					<i className="right chevron icon divider"></i>
-					<div className="section text_wrap" id="filename" style={{width:"120px"}}>
-						{this.props.dataList.name}
-					</div>
-					<i className="right chevron icon divider"></i>
-					<div className="section state">
-						{this.state.loadStatus}
-						:
-						{this.state.loadProgress}
-						%
-					</div>
-				</div>
-				<div className="ui large breadcrumb">
-					<i className="right chevron icon divider"></i>
-					<div id="submit_3" 
-						className="section"
-						onClick={this.sender}
-					>
-						<div className="border state clicker">アップロード</div>
-					</div>
-					<i className="right chevron icon divider"></i>
-					<div className="section">
-						{this.state.cryptoStatus}
-						:
-						{this.state.cryptoProgress}
-						%
-					</div>
-					<i className="right chevron icon divider"></i>
-					<div id="state_3" className="section">
-						{this.state.sendStatus}
-					</div>
-					<div id="navi_3_3" className="section">:</div>
-					<div id="progress_3" className="section">
-						{this.state.sendProgress}
-					</div>
-					<div id="unit_3" className="section">
-						%
-					</div>
-				</div>
-			</div>
-		);
-/***/
-/***/
-		const st1act = (["step", ( this.state.step == 0 ) ? "active" : ""].join(" "));
-		const st2act = (["step", ( this.state.step == 1 ) ? "active" : ""].join(" "));
-		const st3act = (["step", "clicker", ( this.state.step == 2 ) ? "active" : ""].join(" "));
-		const stFact = (["step", ( this.state.step >  2 ) ? "active" : ""].join(" "));
+		const stFact = (["step", ( this.state.step >=  5 ) ? "active" : ""].join(" "));
 		return(
 			<div className="ui small steps" style={{flexWrap:"wrap",flexGrow:1}}>
 				<span className={st1act}>
@@ -550,6 +527,7 @@ class AddPanel extends React.Component {
 		this.refs.mcp.refs.ufp.fileLoader(e.dataTransfer.files[0]);
 	}
     render(){
+		dir_rqs();
         return(
 		<div id="render_area" className="flex_v" style={{height:"100%"}}
 			onDragOver={this.viewOverlay} 
@@ -563,7 +541,7 @@ class AddPanel extends React.Component {
 			</div>
 			<Hud hud={this.state.hud} />
 		</div>
-        );
+		);
     }
 };
 ReactDOM.render(

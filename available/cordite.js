@@ -14,7 +14,7 @@ var _DATA_LIST = function(){
 	this.fragsize = 4194304;
 	this.flag_word = "true";
 	this.cflag = null;
-	this.ver = "0.5.1b",
+	this.ver = "0.5.2b",
 	this.setkey();
 	this.init();
 	this.state = new load_state();
@@ -30,6 +30,7 @@ _DATA_LIST.prototype.setiv = function( v ){
 _DATA_LIST.prototype.setkey = function(){
 	var cookie = document.cookie;
 	this.key = cookie.split(";")[0].split("=")[1];
+	console.log(this.key);
 	return;
 };
 var _REFER = function(){
@@ -44,6 +45,9 @@ _DATA_LIST.prototype.repname = function(){
 	this.namehasher = (new jsSHA( this.name, "ASCII") ).getHash("SHA-256", "HEX") + this.ext;
 	return;
 };
+_DATA_LIST.prototype.setpwd = function(p){
+	this.pf = p;
+};
 _DATA_LIST.prototype.dumpsize = function(){
 	this.size = 0;
 	for(let i = 0;i < this.list.length; i++ ){
@@ -57,35 +61,29 @@ _DATA_LIST.prototype.checker = function(){
 };
 _DATA_LIST.prototype.encrypt = function(){
 	this.repname();
-	const _F = function( datalist , point ){
-		let refer = datalist.list[point];
-		let encrypted = CryptoJS.AES.encrypt( refer.raw , datalist.pf , datalist.options );
-		refer.raw = null;
-		let buffer = toBuffer( String(encrypted) );
-		refer.bin = new Blob( [buffer.buffer] );
-		refer.name = datalist.key + "_" + point;
-		datalist.list[point] = refer;
-		if( datalist.list[point + 1] ){
+	const _F = function( datalist , point, resolve, reject ){
+		window.setTimeout(function(){
+			let refer = datalist.list[point];
+			let encrypted = CryptoJS.AES.encrypt( refer.raw , datalist.pf , datalist.options );
+			refer.raw = null;
+			let buffer = toBuffer( String(encrypted) );
+			refer.bin = new Blob( [buffer.buffer] );
+			refer.name = datalist.key + "_" + point;
+			datalist.list[point] = refer;
 			datalist.state.loading( Math.floor( ( ( point + 1 ) / datalist.list.length) * 100) );
-			window.setTimeout(function(){
-				_F( datalist , point + 1 );
-			} , 16);
-		}
-		else{
-			datalist.state.loaded();
-/**
-			datalist.dumpsize();
-			sendPst( datalist );
-			datalist.safeSend(0);
-			dir_rqs();
-			breakKey();
-**/
+			if( !datalist.list[point + 1] ){
+				datalist.state.loaded();
+				resolve("hello promise");
+			}
+		}, 8);
+		if( datalist.list[point + 1] ){
+			_F( datalist , point + 1, resolve, reject );
 		}
 		return;
 	}
 	this.state.load();
-	_F( this , 0 );
-	return;
+	console.log("pw>>>",this.pf);
+    return new Promise( (resolve, reject) => _F( this , 0, resolve, reject ));
 };
 _DATA_LIST.prototype.decname = function( point ){
 	if( this.namecypher ){
@@ -107,38 +105,34 @@ _DATA_LIST.prototype.decrypt = function(point){
 	this.list[point] = refer;
 	return;
 };
-_DATA_LIST.prototype.safeSend = function(point){
-	let form_data = new FormData();
-	form_data.append( "@auth" , this.key );
-	form_data.append( "@type" , "fragment");
-	form_data.append( "@name" , this.list[point].name );
-	form_data.append( "@bin"  , this.list[point].bin );
-	let state = {
-		"ready"   :"開始",
-		"progress":"送信中",
-		"finish"  :"送信完了",
-		"param"   :( 1 / this.list.length ),
-		"progress_function":function(progress, state, cfp){
-			let _sf = document.getElementById("progress_3");
-			const nv  = parseInt( _sf.innerHTML );
-			const nxv = Math.round((progress - cfp[1]) * cfp[0] * 100);
-			if(nxv == 0){
-				return;
+_DATA_LIST.prototype.safeSend = function(point = 0){
+	this.state.load();
+	let _F = function(datalist, point, resolve, reject){
+		let form_data = new FormData();
+		form_data.append( "@auth" , datalist.key );
+		form_data.append( "@type" , "fragment");
+		form_data.append( "@name" , datalist.list[point].name );
+		form_data.append( "@bin"  , datalist.list[point].bin );
+		let state = {
+			"ready"   :"開始",
+			"progress":"送信中",
+			"finish"  :"送信完了",
+			"param"   :( 1 / datalist.list.length ),
+			"progress_function":datalist.state.loading
+		};
+		retstatus(form_data, state).then(function(value){
+			if( datalist.list[point + 1] ){
+				_F(datalist, point + 1, resolve, reject);
+				console.log("next",point);					
 			}
-			_sf.innerHTML = ( nv + nxv < 100 ) ? nv + nxv : 100;
-			return;
-	}};
-	let _F = function(datalist, point){
-		if( datalist.list[point + 1] ){
-			datalist.safeSend(point + 1);
-		}
-		else{
-			document.getElementById("progress_3").innerHTML = "100";
-		}
+			else{
+				datalist.state.loaded();
+				resolve();
+			}
+		});
 		return;
 	}
-	retstatus( form_data, state, _F(this, point) );
-	return;
+	return new Promise( (resolve, reject) => _F( this , 0, resolve, reject ));
 }
 _DATA_LIST.prototype.fp = function(file){
 //	let datalist = new _DATA_LIST();
@@ -198,14 +192,6 @@ _HUB.prototype.set_data = function(key,value){
 	this.hub[key] = value;
 	return;
 }
-var nameCypher = function(){
-	if( document.getElementById("ncy").checked ){
-		return true;
-	}
-	else{
-		return false;
-	}
-};
 function random( l ){
 	var c = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789+-/*:;'\"";
 	var cl = c.length;
@@ -266,6 +252,7 @@ function RAtime(i){
 	return sst;
 };
 function breakKey(){
+	console.log("vk");
 	const dt = ( new Date('1999-12-31T23:59:59Z') ).toUTCString();
 	document.cookie = "rst=; expires=" + dt;
 	var h = new XMLHttpRequest();
@@ -275,7 +262,7 @@ function breakKey(){
 		}
 	};
 	h.withCredentials = true;
-	h.open("GET","http://localhost/ap2/",true);
+	h.open("GET",urls,true);
 	h.send();
 };
 var bin2hex = function( u8a ){

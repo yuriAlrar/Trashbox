@@ -117,7 +117,7 @@ class extlib:
 			with open( uri + lst , "r") as fp:
 				header = fp.read()
 				if header:
-					dict_data[ lst.decode() ] = header;
+					dict_data[ lst.decode() ] = header
 		return dict_data
 	def htacs_default(self,branch):
 		order = ''
