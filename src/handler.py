@@ -56,7 +56,7 @@ class handler:
 		result = open(path, "rb")
 		return result
 	def RspForDL(self):
-		self.rand = self.ExtLib.hashcode(0,12);
+		self.rand = self.ExtLib.hashcode(0,12)
 		self.response = [('Content-Disposition','attachment;filename="' + self.rand + '"'), ('Content-Length',self.size),('Content-type',self.mime[0])]
 	def dt216(self , delta ):
 		nowTime   = datetime.datetime.now()
@@ -98,8 +98,8 @@ class handler:
 def application(environ, start_response):
 	Handler = handler(environ)
 	p = "/var/www/trashbox"
-	d = p + "/Trashbox/src/default.html"
-	v = p + "/Trashbox/src/view.html"
+	d = p + "/Trashbox/default.html"
+	v = p + "/Trashbox/view.html"
 #get request
 	method = environ.get('REQUEST_METHOD')
 	if method == "GET":

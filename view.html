@@ -1,0 +1,52 @@
+<!doctype html>
+<html>
+	<head>
+		<title>Trashbox</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<link rel="stylesheet" href="/avl/av_kyou.css" type="text/css"/>
+		<link rel="stylesheet" href="/avl/piyo.css" type="text/css"/>
+		<script type="text/javascript" src="/avl/cordite.js"></script>
+		<script type="text/javascript" src="/avl/shimose.js"></script>
+		<script type="text/javascript" src="/avl/crypto-js/rollups/aes.js"></script>
+	</head>
+	<body class="flex_v">
+		<div class="grad" id="banner">
+			<div class="mar">
+				<div class="flex_box" style="width:75%;">
+					<div class="main_theme" style="margin-right:5px;">
+						<span>
+							T<span style="font-variant: small-caps;">rash</span>B<span style="font-variant: small-caps;">ox</span>
+						</span>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="flex_box" style="justify-content:space-between;width:100%;height:100%;padding-top:1px;">
+			<div>&nbsp;</div>
+			<div style="position:relative;width:56%;height:auto;">
+				<div id="opt_area" class="def_color" style="position:absolute;width:100%;">
+					<span ><a id="opt_viw" class="clicker" target="_blank" style="color:rgba(192,192,192,0.1);">ビュー</a></span>
+					|
+					<span ><a id="opt_dwn" class="clicker" style="color:rgba(192,192,192,0.1);">ダウンロード</a></span>
+				</div>
+				<div id="inp_area" class="def_color">
+					ファイルは暗号化されています
+					<br>
+					状態：<span id="load_status"></span>
+					<br>
+					<div class="flex_box">
+						<div>復号キー：</div>
+						<input id="dec_key" type="password" class="def_color" style="width:50%;" />
+						<div class="navi marker"> &raquo; </div>
+						<div id="dec_burn" class="clicker">
+							復号
+						</div>
+					</div>
+				</div>
+			</div>
+			<div>
+				&nbsp;
+			</div>
+		</div>
+	</body>
+</html>
