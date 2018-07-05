@@ -1,10 +1,13 @@
 import path from 'path'
 
+const PRODUCTION = process.env.NODE_ENV === 'production';
+const webpack = require('webpack');
+
 const src  = path.resolve(__dirname, 'available')
 const dist = path.resolve(__dirname, 'build')
 
 export default {
-	mode: 'development',
+	mode: 'production',
 	entry: src + '/rPanel.jsx',
 
 	output: {
@@ -23,5 +26,9 @@ export default {
 	resolve: {
 		extensions: ['.js', '.jsx']
 	},
-	plugins: []
+	plugins: [
+		new webpack.DefinePlugin({
+			'process.env.NODE_ENV': JSON.stringify('production')
+  		})
+	]
 }
