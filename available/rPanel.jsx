@@ -392,7 +392,7 @@ class UploadFlowPanel extends React.Component{
 									ファイルの選択
 							</div>
 							<div className="description">
-								クリック/ドラッグ＆ドロップで選択
+								クリックでファイルを選択
 								<br />
 								ファイル名:{this.props.dataList.name}
 							</div>
