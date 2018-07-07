@@ -33,7 +33,7 @@
 		position:relative;
 		display:block;
 		width:100vw;
-		height:100%;
+		height:100vw;
 		margin:0px;
 		padding:0px;
 		overflow:hidden;
@@ -56,68 +56,6 @@
 		margin-top:0px;
 		text-align:left;
 		background-color:rgba(42,42,42,1);
-	}
-	div.grad_r{
-		position:relative;
-		width:100%;
-		height:40px;
-		padding:5px;
-		margin-top:0px;
-		z-index:7;
-		background: -webkit-linear-gradient(top,#FFFFFF 0%,#FFFFFF 0%,#F0F0F0 96%,#696969 100%);
-		background:    -moz-linear-gradient(top,#FFFFFF 0%,#FFFFFF 0%,#F0F0F0 96%,#696969 100%);
-		background:     -ms-linear-gradient(top,#FFFFFF 0%,#FFFFFF 0%,#F0F0F0 96%,#696969 100%);
-		background:      -o-linear-gradient(top,#FFFFFF 0%,#FFFFFF 0%,#F0F0F0 96%,#696969 100%);
-		background:         linear-gradient(top,#FFFFFF 0%,#FFFFFF 0%,#F0F0F0 96%,#696969 100%);
-	}
-	/**banner box**/
-	div.mar{
-		position:relative;
-		display:flex;
-		display:flexbox;
-		display:-webkit-flex;
-		height:auto;
-		padding-left:10px;
-		padding-right:10px;
-		text-align:left;
-		overflow:hidden;
-	}
-	/**main box**/
-	div.m_mar{
-		position:relative;
-		box-sizing:border-box;
-		display:flex;
-		display:flexbox;
-		display:-webkit-flex;
-		width:100%;
-		height:100%;
-		margin:0;
-		padding:10px;
-		border:0px solid #000000;
-		overflow:hidden;
-	}
-	div.mm_mar{
-		position:relative;
-		width:100%;
-		height:100%;
-		margin:0 auto;
-		margin-left:0px;
-		margin-right:0px;
-		display:flex;
-		display:flexbox;
-		display:-webkit-flex;
-		margin-top:0px;
-		border:0px solid #000000;
-		overflow:hidden;
-	}
-	div.ms_mar{
-		position:rerative;
-		margin-left:45px;
-		margin-right:10px;
-		margin-top:10px;
-		text-align:left;
-		border:0px solid #000000;
-		color:#696969;
 	}
 	div.default_left{
 		position:relative;

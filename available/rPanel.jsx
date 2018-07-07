@@ -538,7 +538,7 @@ class AddPanel extends React.Component {
 			onDrop={this.dropped}
 		>
 			<MainContentPanel ref="mcp" dataList={this.state.dataList} />
-			<div id="grid_area" className="contents" style={{flex:1}}>
+			<div id="grid_area" className="contents">
 			</div>
 			<div style={{width:"100vw",height:"10px"}}>
 			</div>
